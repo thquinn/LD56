@@ -7,10 +7,11 @@ using UnityEngine;
 
 namespace Assets.Code.Model {
     public class Enemy : Entity {
-        public int health;
+        public int health, maxHealth;
 
         public Enemy(int health) {
             this.health = health;
+            maxHealth = health;
         }
 
         public override void Tick() {

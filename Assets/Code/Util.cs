@@ -36,7 +36,7 @@ namespace Assets.Code {
         }
         static Vector3Int BoardCoorToCube(Vector2Int coor) {
             int q = coor.x;
-            int r = coor.y - (coor.x + (coor.x & 1)) / 2;
+            int r = coor.y - (coor.x - (coor.x & 1)) / 2;
             return new Vector3Int(q, r, -q - r);
         }
         static Vector2Int CubeCoorToBoard(Vector3Int coor) {

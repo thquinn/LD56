@@ -8,10 +8,11 @@ using UnityEngine;
 
 namespace Assets.Code.Model {
     public class Spawner : TileFeature {
-        int cooldown, timer;
+        int health, cooldown, timer;
         Ability[] abilities;
 
-        public Spawner(Tile tile, int cooldown, params Ability[] abilities) : base(tile) {
+        public Spawner(Tile tile, int health, int cooldown, params Ability[] abilities) : base(tile) {
+            this.health = health;
             this.cooldown = cooldown;
             this.abilities = abilities;
         }
@@ -32,7 +33,7 @@ namespace Assets.Code.Model {
             }
         }
         void SpawnEnemy(Vector2Int coor) {
-            board.SpawnEntityAtCoor(new Enemy(100), coor);
+            board.SpawnEntityAtCoor(new Enemy(health), coor);
         }
     }
 }
