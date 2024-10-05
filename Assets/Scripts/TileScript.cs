@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class TileScript : MonoBehaviour
 {
+    public GameObject prefabSpawner;
+
     public MeshRenderer meshRenderer;
     public GameObject fog;
 
@@ -23,6 +25,9 @@ public class TileScript : MonoBehaviour
     public void Init(Tile tile) {
         this.tile = tile;
         transform.localPosition = Util.BoardCoorToWorldCoor(tile.coor);
+        if (tile.feature is Spawner) {
+            Instantiate(prefabSpawner, transform);
+        }
     }
 
     void Update() {

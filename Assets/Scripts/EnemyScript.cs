@@ -12,11 +12,13 @@ public class EnemyScript : EntityScript<Enemy>
     public SpriteRenderer srShadow;
 
     Enemy enemy;
+    float tmpInitialSize;
     bool destroying;
     float vParticlesSpeed, vShadowAlpha;
 
     public override EntityScript<Enemy> Init(Enemy enemy) {
         this.enemy = enemy;
+        tmpInitialSize = tmp.fontSize;
         return this;
     }
 
@@ -36,6 +38,7 @@ public class EnemyScript : EntityScript<Enemy>
         }
         transform.localPosition = Util.BoardCoorToWorldCoor(enemy.tile.coor);
         tmp.text = Util.IntToDisplayString(enemy.health);
+        tmp.fontSize = tmpInitialSize * Util.IntToDisplayStringScale(enemy.health);
     }
 
     void DelayedDestroy() {

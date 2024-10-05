@@ -129,6 +129,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: feced3a8d17505e409591c938e900c19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefabSpawner: {fileID: 277888595278863121, guid: ff94b69d47c4a3f4eb6781ce505c047b,
+    type: 3}
   meshRenderer: {fileID: 50922548977196870}
   fog: {fileID: 4498387162913220394}
 --- !u!1 &7592334865461035691

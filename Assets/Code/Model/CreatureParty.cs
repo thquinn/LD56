@@ -18,7 +18,7 @@ namespace Assets.Code.Model {
             return creatures.Select(c => c.GetAttack()).Sum();
         }
 
-        public override void Act() {
+        public override void Tick() {
             Attack();
         }
         bool Attack() {

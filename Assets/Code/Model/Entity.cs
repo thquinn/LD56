@@ -9,7 +9,7 @@ namespace Assets.Code.Model {
         public Tile tile, tileMovingFrom, tileMovingTo;
         public bool isDead;
 
-        public abstract void Act();
+        public abstract void Tick();
         public void Die() {
             isDead = true;
             tile.entity = null;

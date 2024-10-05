@@ -11,6 +11,7 @@ namespace Assets.Code.Model {
         public Vector2Int coor;
         public bool revealed;
         public Entity entity, entityMovingFrom, entityMovingTo;
+        public TileFeature feature;
         public int moveTicksLeft;
 
         public Tile(Board board, Vector2Int coor) {
@@ -57,6 +58,7 @@ namespace Assets.Code.Model {
                     entity.tileMovingTo = null;
                 }
             }
+            feature?.Tick();
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Assets.Code.Model {
                 }
             }
             SpawnEntityAtCoor(new CreatureParty(new Creature(3)), Vector2Int.zero);
-            SpawnEntityAtCoor(new Enemy(100), Vector2Int.one);
+            GetTile(Vector2Int.one).feature = new Spawner(GetTile(Vector2Int.one), 10);
         }
 
         Vector2Int OriginCoorToActual(Vector2Int originCoor) {

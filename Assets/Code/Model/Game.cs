@@ -16,11 +16,12 @@ namespace Assets.Code.Model {
 
         public void Tick() {
             foreach (Entity entity in board.GetTiles().Select(t => t.entity).Where(e => e != null).ToArray().Shuffle()) {
-                entity.Act();
+                entity.Tick();
             }
             foreach (Tile tile in board.GetTiles()) {
                 tile.Tick();
             }
+            ticks--;
         }
     }
 }

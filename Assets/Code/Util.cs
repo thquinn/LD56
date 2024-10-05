@@ -12,6 +12,10 @@ namespace Assets.Code {
             if (i < 1e7) return $"{i / 1e6}.{(i % 1e6) / 1e5}M";
             return $"{i / 1e6}M";
         }
+        public static float IntToDisplayStringScale(int i) {
+            if (i < 100) return 1;
+            return .666f;
+        }
 
         public static Vector3 BoardCoorToWorldCoor(Vector2Int boardCoor) {
             float x = boardCoor.x * 3 / 4f;

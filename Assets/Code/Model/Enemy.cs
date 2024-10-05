@@ -13,7 +13,7 @@ namespace Assets.Code.Model {
             this.health = health;
         }
 
-        public override void Act() {
+        public override void Tick() {
             
         }
         public void Damage(int amount) {
