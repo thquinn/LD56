@@ -26,8 +26,6 @@ public class TileScript : MonoBehaviour
     }
 
     void Update() {
-        if (tile.revealed) {
-            fog.SetActive(false);
-        }
+        fog.SetActive(!tile.revealed);
     }
 }

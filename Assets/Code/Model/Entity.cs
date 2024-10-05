@@ -5,7 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Assets.Code.Model {
-    public class Entity {
-        public Tile tile;
+    public abstract class Entity {
+        public Tile tile, tileMovingFrom, tileMovingTo;
+        public bool isDead;
+
+        public abstract void Act();
+        public void Die() {
+            isDead = true;
+            tile.entity = null;
+            tile = null;
+        }
     }
 }

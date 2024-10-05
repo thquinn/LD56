@@ -6,6 +6,15 @@ using System.Threading.Tasks;
 
 namespace Assets.Code.Model {
     public class Creature {
-        public Creature() { }
+        public CreatureParty party;
+        int attack;
+
+        public Creature(int attack) {
+            this.attack = attack;
+        }
+
+        public int GetAttack() {
+            return attack;
+        }
     }
 }

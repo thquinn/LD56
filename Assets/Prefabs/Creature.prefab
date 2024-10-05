@@ -267,7 +267,8 @@ MonoBehaviour:
   atlasShadows: {fileID: 100100200, guid: be98bcfd311b04b498f48d5ad1e5e881, type: 3}
   spriteName: test
   srSprite: {fileID: 3202368917628961030}
-  srShadow: {fileID: 6287609378475125830}
+  srBlur: {fileID: 6287609378475125830}
+  srShadow: {fileID: 5218324030120597312}
 --- !u!114 &886355643248962556
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -309,7 +310,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0.001, z: 0.02}
-  m_LocalScale: {x: 0.12, y: 0.075, z: 0.15}
+  m_LocalScale: {x: 0.12, y: 0.075, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8161179389661590930}

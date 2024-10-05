@@ -26,18 +26,22 @@ namespace Assets.Code.Model {
                     tilesByRecent.Add(tile);
                 }
             }
-            SpawnEntityAtCoor(new CreatureParty(new Creature()), Vector2Int.zero);
+            SpawnEntityAtCoor(new CreatureParty(new Creature(3)), Vector2Int.zero);
+            SpawnEntityAtCoor(new Enemy(100), Vector2Int.one);
         }
 
         Vector2Int OriginCoorToActual(Vector2Int originCoor) {
             return originCoor + centerCoor;
         }
-        Vector2Int ActualCoorToOrigin(Vector2Int originCoor) {
-            return centerCoor - originCoor;
+        Vector2Int ActualCoorToOrigin(Vector2Int actualCoor) {
+            return actualCoor - centerCoor;
         }
 
         public Tile GetTile(Vector2Int coor) {
             coor = OriginCoorToActual(coor);
+            if (coor.x < 0 || coor.y < 0 || coor.x >= tiles.GetLength(0) || coor.y >= tiles.GetLength(1)) {
+                return null;
+            }
             return tiles[coor.x, coor.y];
         }
         public IEnumerable<Tile> GetTiles() {
@@ -53,7 +57,7 @@ namespace Assets.Code.Model {
         }
 
         public void SpawnEntityAtCoor(Entity entity, Vector2Int coor) {
-            GetTile(coor).MoveEntityHere(entity);
+            GetTile(coor).MoveEntityHereImmediate(entity);
         }
     }
 }
