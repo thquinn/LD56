@@ -15,6 +15,7 @@ namespace Assets.Code.Model {
         }
 
         public int GetTimeCost() {
+            // 1, 2, 2, 3, 3, 3...
             return Mathf.RoundToInt(Mathf.Sqrt(2 * tiles.Count));
         }
         public int GetResearchGain() {

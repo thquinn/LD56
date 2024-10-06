@@ -4,6 +4,8 @@ using Assets.Code.Model.Creatures;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
+using UnityEditor;
 using UnityEngine;
 
 public class InteractionScript : MonoBehaviour
@@ -13,6 +15,10 @@ public class InteractionScript : MonoBehaviour
     public GameObject prefabCreatureParty;
 
     public UIExpeditionPanelScript expeditionScript;
+    public RectTransform rtMoveCost;
+    public TextMeshProUGUI tmpMoveCost;
+    public Canvas canvas;
+    public Camera cam;
 
     Game game;
     BoardScript boardScript;
@@ -74,15 +80,21 @@ public class InteractionScript : MonoBehaviour
         }
     }
     void UpdatePath() {
-        if (grabbedEntity == null) {
+        if (tmpMoveCost.gameObject.activeSelf) {
+            rtMoveCost.anchoredPosition = (Input.mousePosition - new Vector3(Screen.width / 2, Screen.height / 2, 0)) / canvas.scaleFactor;
+        }
+        if (grabbedEntity?.tile == null) {
             lastPathTile = null;
             path = null;
+            tmpMoveCost.gameObject.SetActive(false);
             return;
         }
         Tile targetTile = boardScript.hoveredTile;
         if (targetTile == lastPathTile) return;
         lastPathTile = targetTile;
         path = game.board.AStar(grabbedEntity.tile.coor, targetTile.coor);
+        tmpMoveCost.gameObject.SetActive(path != null);
+        tmpMoveCost.text = path == null ? "" : $"{game.board.GetPathTimeCost(path)}<sprite name=\"time\" tint=1>";
     }
 
     public static bool IsGrabbed(Entity entity) {

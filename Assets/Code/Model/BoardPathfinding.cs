@@ -4,6 +4,12 @@ using UnityEngine;
 
 namespace Assets.Code.Model {
     public partial class Board {
+        public int GetPathTimeCost(List<Vector2Int> path) {
+            int n = path.Count - 1;
+            // 1, 2, 2, 3, 3, 3...
+            return Mathf.RoundToInt(Mathf.Sqrt(2 * n));
+        }
+
         public List<Vector2Int> AStar(Vector2Int from, Vector2Int to) {
             if (!GetTile(to).CanBeMovedTo()) return null;
 

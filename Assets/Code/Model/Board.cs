@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace Assets.Code.Model {
     public partial class Board {
-        static int STARTING_VISION_RADIUS = 5;
+        static int STARTING_VISION_RADIUS = 2;
 
         public Game game;
         Tile[,] tiles;

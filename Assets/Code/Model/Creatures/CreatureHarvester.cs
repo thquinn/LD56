@@ -9,7 +9,7 @@ using UnityEngine.SocialPlatforms;
 
 namespace Assets.Code.Model.Creatures {
     public class CreatureHarvester : Creature {
-        public CreatureHarvester() : base("Harvester", 25, 5, new CreatureAbilityHarvest()) { }
+        public CreatureHarvester() : base("Harvester", 25, 3, new CreatureAbilityHarvest()) { }
     }
 
     public class CreatureAbilityHarvest : CreatureAbility {
