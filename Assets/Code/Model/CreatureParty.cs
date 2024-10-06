@@ -9,9 +9,11 @@ namespace Assets.Code.Model {
     public class CreatureParty : Entity {
         public List<Creature> creatures;
 
-        public CreatureParty(Creature creature) {
-            creatures = new List<Creature>() { creature };
-            creature.party = this;
+        public CreatureParty(params Creature[] creatures) {
+            this.creatures = creatures.ToList();
+            foreach (Creature creature in creatures) {
+                creature.party = this;
+            }
         }
 
         public int GetAttack() {

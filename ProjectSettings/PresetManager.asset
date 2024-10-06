@@ -18,3 +18,7 @@ PresetManager:
         type: 2}
       m_Filter: glob:"Sprites/Shadows/*.png"
       m_Disabled: 0
+    - m_Preset: {fileID: 2655988077585873504, guid: 4084b8fbc160f0444b3fc943df9dca07,
+        type: 2}
+      m_Filter: glob:"Sprites/*.png"
+      m_Disabled: 0

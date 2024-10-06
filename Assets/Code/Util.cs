@@ -55,6 +55,16 @@ namespace Assets.Code {
             }
             return hit.collider;
         }
+        public static Vector3 GetMouseHoverCoordinate(float offset) {
+            if (mainCamera == null) mainCamera = Camera.main;
+            Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+            Plane ground = new Plane(Vector3.up, Vector3.zero);
+            float distance;
+            if (!ground.Raycast(ray, out distance)) {
+                throw new System.Exception("Camera raycast couldn't find the ground plane.");
+            }
+            return ray.GetPoint(distance + offset);
+        }
     }
 
     public static class ArrayExtensions {

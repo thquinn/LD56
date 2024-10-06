@@ -28,12 +28,17 @@ public class CreaturePartyScript : EntityScript<CreatureParty>
     }
 
     void Update() {
-        if (party.tile != lastTile && party.tile != null) {
-            Vector3 localPosition = Util.BoardCoorToWorldCoor(party.tile.coor);
+        if (InteractionScript.IsGrabbed(party)) {
+            transform.localPosition = Util.GetMouseHoverCoordinate(-1);
+        } else if (party.tile != null || party.tileMovingFrom != null) {
+            Tile tile = party.tile ?? party.tileMovingFrom;
+            Vector3 localPosition = Util.BoardCoorToWorldCoor(tile.coor);
             localPosition.y = transform.localPosition.y;
             transform.localPosition = localPosition;
-            dy = 0;
-            lastTile = party.tile;
+            if (tile != lastTile) {
+                dy = 0;
+                lastTile = party.tile;
+            }
         }
         foreach (Creature creature in party.creatures) {
             if (creatureScripts.ContainsKey(creature)) continue;

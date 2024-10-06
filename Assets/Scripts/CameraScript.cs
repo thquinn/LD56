@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class CameraScript : MonoBehaviour {
     Vector3 lookAt;
-    public float distance = 6;
+    float distance = 6;
     public float rotateSensitivity;
     public float panSensitivity;
     public float scrollSensitivity;
-    float horizontalAngle = Mathf.PI / 2;
+    float horizontalAngle = -Mathf.PI / 2;
     float verticalAngle = Mathf.PI / 4;
 
     private void Update() {

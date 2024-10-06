@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3656242168691544769}
   - component: {fileID: 133067494894483951}
+  - component: {fileID: 2597149885746742083}
   m_Layer: 0
   m_Name: Sprites
   m_TagString: Untagged
@@ -48,6 +49,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   x: 1
   y: 0
+--- !u!114 &2597149885746742083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 436638376953940720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5195c0f259aec245b01fef064f4526e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  atlasCreatures: {fileID: 100100200, guid: 3470412c06c38ab4e88c5dab45d42c17, type: 3}
+  atlasShadows: {fileID: 100100200, guid: be98bcfd311b04b498f48d5ad1e5e881, type: 3}
+  srMain: {fileID: 3202368917628961030}
+  srBlur: {fileID: 6287609378475125830}
+  imageMain: {fileID: 0}
+  imageBlur: {fileID: 0}
+  spriteName: test
 --- !u!1 &1731288535801671226
 GameObject:
   m_ObjectHideFlags: 0
@@ -263,9 +283,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 777d2219872091c4fad616a7e53d5432, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  atlasCreatures: {fileID: 100100200, guid: 3470412c06c38ab4e88c5dab45d42c17, type: 3}
-  atlasShadows: {fileID: 100100200, guid: be98bcfd311b04b498f48d5ad1e5e881, type: 3}
-  spriteName: test
   srSprite: {fileID: 3202368917628961030}
   srBlur: {fileID: 6287609378475125830}
   srShadow: {fileID: 5218324030120597312}
