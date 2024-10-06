@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class UIStatusScript : MonoBehaviour
 {
-    public TextMeshProUGUI tmpTime, tmpMoney, tmpResearch;
+    public TextMeshProUGUI tmpTime, tmpMoney, tmpResearch, tmpDebt;
 
     Game game;
 
@@ -19,5 +19,8 @@ public class UIStatusScript : MonoBehaviour
         tmpTime.text = Util.IntToDisplayString(game.time);
         tmpMoney.text = Util.IntToDisplayString(game.money);
         tmpResearch.text = Util.IntToDisplayString(game.researchPoints);
+        tmpDebt.text = game.gameOver ?
+            "GAME OVER" :
+            $"-<sprite name=\"money\" tint=1>{Util.IntToDisplayString(game.debt.current)} AT <sprite name=\"time\" tint=1>0";
     }
 }

@@ -16,19 +16,22 @@ namespace Assets.Code.Model {
         public Expedition expedition;
         public ResearchStatus researchStatus;
         public Shop shop;
+        public Debt debt;
+        public bool gameOver;
 
         public Game() {
             gameEventManager = new GameEventManager();
-            
         }
         public void Init() {
             time = 100;
             researchStatus = ResearchStatus.STARTING_STATUS;
             board = new Board(this);
             shop = new Shop(this);
+            debt = new Debt(this);
         }
 
         public void Tick() {
+            if (gameOver) return;
             foreach (Entity entity in board.GetTiles().Select(t => t.entity).Where(e => e != null).ToArray().Shuffle()) {
                 entity.Tick();
             }
@@ -45,6 +48,9 @@ namespace Assets.Code.Model {
                 }
             }
             board.ExpansionCheck();
+            if (time == 0) {
+                debt.Pay();
+            }
         }
 
         public void StartExpedition(Expedition expedition) {

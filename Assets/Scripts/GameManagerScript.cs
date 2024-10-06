@@ -57,6 +57,6 @@ public class GameManagerScript : MonoBehaviour
         return instance.pauser.GetSource();
     }
     internal static bool IsInteractable() {
-        return instance.game.waitTicks == 0 && instance.pauser.IsUnpaused();
+        return !instance.game.gameOver && instance.game.waitTicks == 0 && instance.pauser.IsUnpaused();
     }
 }
