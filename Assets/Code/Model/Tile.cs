@@ -12,6 +12,7 @@ namespace Assets.Code.Model {
         public bool revealed;
         public Entity entity, entityMovingFrom, entityMovingTo;
         public TileFeature feature;
+        public bool featureVisibleInFog;
         public int moveTicksLeft;
 
         public Tile(Board board, Vector2Int coor) {

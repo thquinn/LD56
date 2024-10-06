@@ -42,40 +42,46 @@ MonoBehaviour:
   m_SpriteCharacterTable:
   - m_ElementType: 2
     m_Unicode: 65534
-    m_GlyphIndex: 0
+    m_GlyphIndex: 2
     m_Scale: 1
     m_Name: time
     m_HashCode: 4074549
   - m_ElementType: 2
     m_Unicode: 65534
-    m_GlyphIndex: 1
+    m_GlyphIndex: 3
     m_Scale: 1
     m_Name: money
     m_HashCode: 132364592
+  - m_ElementType: 2
+    m_Unicode: 65534
+    m_GlyphIndex: 4
+    m_Scale: 1
+    m_Name: research
+    m_HashCode: 1900286841
   m_SpriteGlyphTable:
-  - m_Index: 0
+  - m_Index: 2
     m_Metrics:
       m_Width: 256
       m_Height: 256
       m_HorizontalBearingX: 0
       m_HorizontalBearingY: 256
-      m_HorizontalAdvance: 224
+      m_HorizontalAdvance: 232
     m_GlyphRect:
       m_X: 0
       m_Y: 768
       m_Width: 256
       m_Height: 256
-    m_Scale: 0.75
+    m_Scale: 0.725
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0
-    sprite: {fileID: 1997142104, guid: 73322a4577ac01c4d94341dbb7f936d8, type: 3}
-  - m_Index: 1
+    sprite: {fileID: 1058144267, guid: 73322a4577ac01c4d94341dbb7f936d8, type: 3}
+  - m_Index: 3
     m_Metrics:
       m_Width: 256
       m_Height: 256
       m_HorizontalBearingX: 16
       m_HorizontalBearingY: 256
-      m_HorizontalAdvance: 272
+      m_HorizontalAdvance: 280
     m_GlyphRect:
       m_X: 256
       m_Y: 768
@@ -84,7 +90,23 @@ MonoBehaviour:
     m_Scale: 0.75
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0
-    sprite: {fileID: 1219366755, guid: 73322a4577ac01c4d94341dbb7f936d8, type: 3}
+    sprite: {fileID: 1646516464, guid: 73322a4577ac01c4d94341dbb7f936d8, type: 3}
+  - m_Index: 4
+    m_Metrics:
+      m_Width: 256
+      m_Height: 256
+      m_HorizontalBearingX: 32
+      m_HorizontalBearingY: 240
+      m_HorizontalAdvance: 288
+    m_GlyphRect:
+      m_X: 512
+      m_Y: 768
+      m_Width: 256
+      m_Height: 256
+    m_Scale: 0.825
+    m_AtlasIndex: 0
+    m_ClassDefinitionType: 0
+    sprite: {fileID: 698558784, guid: 73322a4577ac01c4d94341dbb7f936d8, type: 3}
   spriteInfoList: []
   fallbackSpriteAssets: []
 --- !u!21 &470608843649804917

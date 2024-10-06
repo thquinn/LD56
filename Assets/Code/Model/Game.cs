@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 
 namespace Assets.Code.Model {
     public class Game {
-        public int ticks;
         public Board board;
+        public int time, money, researchPoints;
+        // Research.
+        public ResearchStatus researchStatus;
 
         public Game() {
-            ticks = 100;
-            board = new Board();
+            researchStatus = ResearchStatus.STARTING_STATUS;
+            board = new Board(this);
+            time = 100;
         }
 
         public void Tick() {
@@ -21,7 +24,8 @@ namespace Assets.Code.Model {
             foreach (Tile tile in board.GetTiles()) {
                 tile.Tick();
             }
-            ticks--;
+            board.ExpansionCheck();
+            time--;
         }
     }
 }

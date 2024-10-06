@@ -3,31 +3,34 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 namespace Assets.Code.Model {
-    public class Board {
+    public partial class Board {
+        static int STARTING_VISION_RADIUS = 2;
+
+        public Game game;
         Tile[,] tiles;
         List<Tile> tilesByRecent;
         Vector2Int centerCoor;
 
-        public Board() {
+        public Board(Game game) {
+            this.game = game;
             tiles = new Tile[21, 21];
             tilesByRecent = new List<Tile>();
             centerCoor = new Vector2Int(10, 10);
             for (int x = 0; x < tiles.GetLength(0); x++) {
                 for (int y = 0; y < tiles.GetLength(1); y++) {
-                    Vector2Int actualCoor = new Vector2Int(x, y);
-                    Tile tile = new Tile(this, ActualCoorToOrigin(actualCoor));
-                    if (Util.HexagonalDistance(actualCoor, centerCoor) <= 2) {
-                        tile.revealed = true;
-                    }
-                    tiles[x, y] = tile;
-                    tilesByRecent.Add(tile);
+                    CreateTile(x, y);
                 }
             }
-            SpawnEntityAtCoor(new CreatureParty(new Creature(3)), Vector2Int.zero);
-            GetTile(Vector2Int.one).feature = new Spawner(GetTile(Vector2Int.one), 100, 10);
+            foreach (Tile tile in Util.GetHexCoorsWithinRange(Vector2Int.zero, STARTING_VISION_RADIUS).Select(c => GetTile(c)).Where(t => t != null)) {
+                RevealTile(tile);
+            }
+            SpawnEntityAtCoor(new CreatureParty(new Creature(3)), -Vector2Int.one);
+            PlaceFeatureAtCoor(new Spawner(100, 10), new Vector2Int(1, 0));
+            PopulateNewTiles(tilesByRecent);
         }
 
         Vector2Int OriginCoorToActual(Vector2Int originCoor) {
@@ -56,8 +59,20 @@ namespace Assets.Code.Model {
             return tilesByRecent.Count;
         }
 
+        public void RevealTile(Tile tile) {
+            tile.revealed = true;
+            foreach (Tile nearbyTile in Util.GetHexCoorsWithinRange(tile.coor, game.researchStatus.fogVisionRadius).Select(c => GetTile(c)).Where(t => t != null)) {
+                nearbyTile.featureVisibleInFog = true;
+            }
+        }
+
         public void SpawnEntityAtCoor(Entity entity, Vector2Int coor) {
             GetTile(coor).MoveEntityHereImmediate(entity);
+        }
+        public void PlaceFeatureAtCoor(TileFeature feature, Vector2Int coor) {
+            Tile tile = GetTile(coor);
+            tile.feature = feature;
+            feature.tile = tile;
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Assets.Code.Model {
         int health, cooldown, timer;
         Ability[] abilities;
 
-        public Spawner(Tile tile, int health, int cooldown, params Ability[] abilities) : base(tile) {
+        public Spawner(int health, int cooldown, params Ability[] abilities) {
             this.health = health;
             this.cooldown = cooldown;
             this.abilities = abilities;
@@ -27,13 +27,13 @@ namespace Assets.Code.Model {
                 SpawnEnemy(tile.coor);
                 return;
             }
-            Tile randomNeighbor = Util.GetNeighboringHexCoors(tile.coor).Select(c => board.GetTile(c)).Where(t => t?.CanBeMovedTo() == true).ToArray().Pick();
+            Tile randomNeighbor = Util.GetNeighboringHexCoors(tile.coor).Select(c => tile.board.GetTile(c)).Where(t => t?.CanBeMovedTo() == true).ToArray().Pick();
             if (randomNeighbor != null) {
                 SpawnEnemy(randomNeighbor.coor);
             }
         }
         void SpawnEnemy(Vector2Int coor) {
-            board.SpawnEntityAtCoor(new Enemy(health), coor);
+            tile.board.SpawnEntityAtCoor(new Enemy(health), coor);
         }
     }
 }

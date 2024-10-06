@@ -29,7 +29,7 @@ public class CreaturePartyScript : EntityScript<CreatureParty>
 
     void Update() {
         if (InteractionScript.IsGrabbed(party)) {
-            transform.localPosition = Util.GetMouseHoverCoordinate(-1);
+            transform.localPosition = Util.GetMouseHoverCoordinate(-.5f);
         } else if (party.tile != null || party.tileMovingFrom != null) {
             Tile tile = party.tile ?? party.tileMovingFrom;
             Vector3 localPosition = Util.BoardCoorToWorldCoor(tile.coor);

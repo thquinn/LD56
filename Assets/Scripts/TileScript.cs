@@ -9,9 +9,10 @@ public class TileScript : MonoBehaviour
     public GameObject prefabSpawner;
 
     public MeshRenderer meshRenderer;
-    public GameObject fog;
+    public GameObject fog, fogIcon;
 
     public Tile tile;
+    GameObject featureObject;
 
     void Start() {
         MaterialPropertyBlock block = new MaterialPropertyBlock();
@@ -25,12 +26,15 @@ public class TileScript : MonoBehaviour
     public void Init(Tile tile) {
         this.tile = tile;
         transform.localPosition = Util.BoardCoorToWorldCoor(tile.coor);
-        if (tile.feature is Spawner) {
-            Instantiate(prefabSpawner, transform);
-        }
     }
 
     void Update() {
         fog.SetActive(!tile.revealed);
+        fogIcon.SetActive(!tile.revealed && tile.feature != null && tile.featureVisibleInFog);
+        if (tile.revealed && tile.feature != null && featureObject == null) {
+            if (tile.feature is Spawner) {
+                featureObject = Instantiate(prefabSpawner, transform);
+            }
+        }
     }
 }
