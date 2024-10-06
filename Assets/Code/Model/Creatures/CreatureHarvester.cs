@@ -17,7 +17,7 @@ namespace Assets.Code.Model.Creatures {
         static int AMOUNT = 5;
 
         public CreatureAbilityHarvest() : base(NAME) { }
-        public override Ability Clone() { return new CreatureAbilityHome(); }
+        public override Ability Clone() { return new CreatureAbilityHarvest(); }
         public override string GetDescription() {
             return string.Format($"Gain <sprite name=\"money\" tint=1>{AMOUNT} whenever this kills an enemy.");
         }

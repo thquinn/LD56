@@ -20,8 +20,9 @@ namespace Assets.Code {
             return $"{i / 1e6}M";
         }
         public static float IntToDisplayStringScale(int i) {
-            if (i < 100) return 1;
-            return .666f;
+            if (i < 20) return 1;
+            if (i < 200) return .8f;
+            return .66f;
         }
 
         public static Vector3 BoardCoorToWorldCoor(Vector2Int boardCoor) {

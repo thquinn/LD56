@@ -30,6 +30,15 @@ namespace Assets.Code.Model {
         public bool CanBeMovedTo() {
             return revealed && entity == null && entityMovingFrom == null && entityMovingTo == null;
         }
+        public bool CanBeMergedInto(Party other) {
+            Party party = entity as Party;
+            if (party == null) return false;
+            if (other.tile == null || Util.HexagonalDistance(coor, other.tile.coor) != 1D) return false;
+            ResearchStatus researchStatus = board.game.researchStatus;
+            if (party.creatures.Count + other.creatures.Count > researchStatus.partySize) return false;
+            if (!researchStatus.partyMixing && party.creatures.Concat(other.creatures).Select(c => c.name).Distinct().Count() > 1) return false;
+            return true;
+        }
 
         public void MoveEntityHereImmediate(Entity entity) {
             if (entity.tile != null) entity.tile.entity = null;

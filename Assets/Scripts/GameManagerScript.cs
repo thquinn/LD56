@@ -29,6 +29,10 @@ public class GameManagerScript : MonoBehaviour
     }
 
     void Update() {
+        var deadEntities = entityScripts.Keys.Where(e => e.isDead).ToList();
+        foreach (Entity deadEntity in deadEntities) {
+            entityScripts.Remove(deadEntity);
+        }
         foreach (Entity entity in game.board.GetTiles().Select(t => t.entity).Where(e => e != null && !entityScripts.ContainsKey(e))) {
             if (entity is Party) {
                 entityScripts[entity] = Instantiate(prefabCreatureParty, transform).GetComponent<CreaturePartyScript>().Init(entity as Party);
@@ -50,6 +54,9 @@ public class GameManagerScript : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.F2)) {
             game.shop.AddSlot();
+        }
+        if (Input.GetKeyDown(KeyCode.F3)) {
+            game.researchStatus.partySize = 100;
         }
     }
 

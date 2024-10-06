@@ -13,7 +13,7 @@ namespace Assets.Code.Model {
         public GameEventManager gameEventManager;
         public Board board;
         public int time, money, researchPoints;
-        public int waitTicks;
+        public int waitTicks, totalTicks;
         public Expedition expedition;
         public ResearchTree researchTree;
         public ResearchStatus researchStatus;
@@ -39,6 +39,7 @@ namespace Assets.Code.Model {
                 entity.Tick();
             }
             time--;
+            totalTicks++;
             if (waitTicks > 0) waitTicks--;
             foreach (Tile tile in board.GetTiles()) {
                 tile.AfterTick();

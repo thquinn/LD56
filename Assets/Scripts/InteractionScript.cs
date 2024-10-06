@@ -52,9 +52,10 @@ public class InteractionScript : MonoBehaviour
     }
     void UpdateMouseUp() {
         if (grabbedEntity == null) return;
+        Party party = grabbedEntity as Party;
         Tile targetTile = boardScript.hoveredTile;
         if (targetTile != grabbedEntity.tile && targetTile?.CanBeMovedTo() == true) {
-            Party party = grabbedEntity as Party;
+            
             // Move the entity.
             if (party.tile != null) {
                 var path = game.board.AStar(party.tile.coor, targetTile.coor);
@@ -69,9 +70,12 @@ public class InteractionScript : MonoBehaviour
                 }
             }
         }
-        if (targetTile.distanceToRevealed == 1 && grabbedEntity.CanExplore(targetTile)) {
+        if (grabbedEntity.CanExplore(targetTile)) {
             // Start an expedition.
-            UIExpeditionPanelScript.StartExpedition(grabbedEntity as Party, targetTile);
+            UIExpeditionPanelScript.StartExpedition(party, targetTile);
+        }
+        if (targetTile.CanBeMergedInto(party)) {
+            (targetTile.entity as Party).MergeIn(party);
         }
         grabbedEntity = null;
         if (floatingParty != null) {
@@ -83,13 +87,13 @@ public class InteractionScript : MonoBehaviour
         if (tmpMoveCost.gameObject.activeSelf) {
             rtMoveCost.anchoredPosition = (Input.mousePosition - new Vector3(Screen.width / 2, Screen.height / 2, 0)) / canvas.scaleFactor;
         }
-        if (grabbedEntity?.tile == null) {
+        Tile targetTile = boardScript.hoveredTile;
+        if (grabbedEntity?.tile == null || targetTile == null) {
             lastPathTile = null;
             path = null;
             tmpMoveCost.gameObject.SetActive(false);
             return;
         }
-        Tile targetTile = boardScript.hoveredTile;
         if (targetTile == lastPathTile) return;
         lastPathTile = targetTile;
         path = game.board.AStar(grabbedEntity.tile.coor, targetTile.coor);

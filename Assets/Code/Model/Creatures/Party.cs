@@ -22,13 +22,19 @@ namespace Assets.Code.Model {
             return string.Join(" & ", creatures.Select(c => c.name));
         }
         public override bool CanExplore(Tile otherTile) {
-            return tile != null && Util.HexagonalDistance(tile.coor, otherTile.coor) == 1;
+            return tile != null && Util.HexagonalDistance(tile.coor, otherTile.coor) == 1 && otherTile.distanceToRevealed == 1;
         }
         public override bool HasAbility(string name) {
             return creatures.Any(c => c.abilities.Any(a => a.name == name));
         }
         public int GetAttack() {
             return creatures.Select(c => c.GetAttack()).Sum();
+        }
+
+        public void MergeIn(Party other) {
+            creatures.AddRange(other.creatures);
+            other.isDead = true;
+            other.tile.entity = null;
         }
 
         public override void Tick() {
