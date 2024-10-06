@@ -1,7 +1,9 @@
 using Assets.Code;
 using Assets.Code.Model;
+using Assets.Code.Model.Creatures;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class InteractionScript : MonoBehaviour
@@ -44,7 +46,7 @@ public class InteractionScript : MonoBehaviour
                 // Move the entity.
                 if ((grabbedEntity as Party).tile != null) {
                     boardScript.hoveredTile.MoveEntityHereSlow(grabbedEntity, 1);
-                } else {
+                } else if (targetTile.GetNeighbors().Any(t => t.entity?.HasAbility(CreatureAbilityHome.NAME) == true)) {
                     boardScript.hoveredTile.MoveEntityHereImmediate(grabbedEntity);
                 }
             }

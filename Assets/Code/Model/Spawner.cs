@@ -1,5 +1,4 @@
-﻿using Assets.Code.Model.Abilities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,9 +8,9 @@ using UnityEngine;
 namespace Assets.Code.Model {
     public class Spawner : TileFeature {
         int health, cooldown, timer;
-        Ability[] abilities;
+        EnemyAbility[] abilities;
 
-        public Spawner(int health, int cooldown, params Ability[] abilities) {
+        public Spawner(int health, int cooldown, params EnemyAbility[] abilities) {
             this.health = health;
             this.cooldown = cooldown;
             this.abilities = abilities;

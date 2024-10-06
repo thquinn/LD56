@@ -11,6 +11,7 @@ public class VFXAnimatedSpriteScript : MonoBehaviour
 
     public SpriteAtlas atlasCreatures, atlasShadows;
 
+    public MonoBehaviourWithCreature creatureScript;
     public SpriteRenderer srMain, srBlur;
     public Image imageMain, imageBlur;
     public string spriteName;
@@ -26,7 +27,7 @@ public class VFXAnimatedSpriteScript : MonoBehaviour
         int nextAnimationFrame = Mathf.FloorToInt((Time.time * ANIMATION_RATE) % 5);
         if (nextAnimationFrame != animationFrame) {
             animationFrame = nextAnimationFrame;
-            string frameName = $"{spriteName}_{animationFrame}";
+            string frameName = $"{creatureScript.creature.name.ToLower()}_{animationFrame}";
             Sprite spriteMain = atlasCreatures.GetSprite(frameName);
             Sprite spriteBlur = atlasShadows.GetSprite(frameName);
             if (srMain != null) {

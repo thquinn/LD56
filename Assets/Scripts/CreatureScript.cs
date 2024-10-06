@@ -5,8 +5,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D;
 
-public class CreatureScript : MonoBehaviour {
+public abstract class MonoBehaviourWithCreature : MonoBehaviour {
     public Creature creature;
+}
+
+public class CreatureScript : MonoBehaviourWithCreature {
     public SpriteRenderer srSprite, srBlur, srShadow;
 
     float alphaInitialShadow;

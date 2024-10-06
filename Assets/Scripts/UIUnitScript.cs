@@ -1,19 +1,20 @@
 using Assets.Code.Model;
+using Assets.Code.Model.Creatures;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIUnitScript : MonoBehaviour
-{
+public class UIUnitScript : MonoBehaviourWithCreature {
     public GameObject goSprites, goRing, goAttack, goCost;
 
     Party party;
 
     void Start() {
-        Init(new Party(new Creature(3)));
+        Init(new CreatureQueen());
     }
-    public void Init(Party party) {
-        this.party = party;
+    public void Init(Creature creature) {
+        this.creature = creature;
+        party = new Party(creature);
     }
 
     void Update() {

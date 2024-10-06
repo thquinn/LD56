@@ -63,6 +63,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   atlasCreatures: {fileID: 100100200, guid: 3470412c06c38ab4e88c5dab45d42c17, type: 3}
   atlasShadows: {fileID: 100100200, guid: be98bcfd311b04b498f48d5ad1e5e881, type: 3}
+  creatureScript: {fileID: 4367048466980279877}
   srMain: {fileID: 3202368917628961030}
   srBlur: {fileID: 6287609378475125830}
   imageMain: {fileID: 0}
