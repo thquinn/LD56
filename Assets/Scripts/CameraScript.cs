@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraScript : MonoBehaviour {
+    public UIResearchScreenScript uiResearchScreenScript;
+
     Vector3 lookAt;
     float distance = 6;
     public float rotateSensitivity;
@@ -13,6 +15,8 @@ public class CameraScript : MonoBehaviour {
     float verticalAngle = Mathf.PI / 4;
 
     private void Update() {
+        if (uiResearchScreenScript.showing) return;
+
         // Input.
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) {
             lookAt += (Input.GetKey(KeyCode.A) ? -1 : 1) * transform.right * panSensitivity * Time.deltaTime * distance;

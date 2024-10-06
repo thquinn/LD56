@@ -2,6 +2,7 @@
 using System.Linq;
 using UnityEditor.ShaderGraph;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Code {
     public static class Util {
@@ -151,6 +152,14 @@ namespace Assets.Code {
             Color c = spriteRenderer.color;
             c.a = Mathf.Clamp01(alpha);
             spriteRenderer.color = c;
+        }
+    }
+
+    public static class ImageExtensions {
+        public static void SetAlpha(this Image image, float alpha) {
+            Color c = image.color;
+            c.a = Mathf.Clamp01(alpha);
+            image.color = c;
         }
     }
 }

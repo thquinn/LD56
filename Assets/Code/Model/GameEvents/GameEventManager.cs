@@ -80,12 +80,14 @@ namespace Assets.Code.Model.GameEvents {
     public class GameEvent {
         public GameEventType type;
         public Entity source, target;
+        public Enemy[] enemies;
+        public int amount;
         public GameEvent Trigger() {
             GameManagerScript.instance.game?.gameEventManager.Trigger(this);
             return this;
         }
     }
     public enum GameEventType {
-        None, EnemyKilled
+        None, AttackFilterTargets, AttackBeforeDamage, EnemyKilled
     }
 }

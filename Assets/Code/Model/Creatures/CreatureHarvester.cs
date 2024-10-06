@@ -8,8 +8,8 @@ using static UnityEngine.UI.CanvasScaler;
 using UnityEngine.SocialPlatforms;
 
 namespace Assets.Code.Model.Creatures {
-    public class CreatureHarvester : Creature {
-        public CreatureHarvester() : base("Harvester", 25, 3, new CreatureAbilityHarvest()) { }
+    public partial class Creature {
+        public static Creature HARVESTER = new Creature("Harvester", 25, 3, new CreatureAbilityHarvest());
     }
 
     public class CreatureAbilityHarvest : CreatureAbility {
@@ -17,6 +17,10 @@ namespace Assets.Code.Model.Creatures {
         static int AMOUNT = 5;
 
         public CreatureAbilityHarvest() : base(NAME) { }
+        public override Ability Clone() { return new CreatureAbilityHome(); }
+        public override string GetDescription() {
+            return string.Format($"Gain <sprite name=\"money\" tint=1>{AMOUNT} whenever this kills an enemy.");
+        }
 
         public override void AttachTo(Creature creature) {
             base.AttachTo(creature);
@@ -25,10 +29,6 @@ namespace Assets.Code.Model.Creatures {
                 e => (e.source as Party)?.creatures.Contains(creature) == true,
             Handle
             );
-        }
-
-        public override string GetDescription() {
-            return string.Format($"Gain <sprite name=\"money\" tint=1>{AMOUNT} whenever this kills an enemy.");
         }
 
         bool Handle(GameEvent e) {

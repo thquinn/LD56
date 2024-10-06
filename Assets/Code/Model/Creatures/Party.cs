@@ -1,4 +1,5 @@
-﻿using Assets.Code.Model.GameEvents;
+﻿using Assets.Code.Model.Creatures;
+using Assets.Code.Model.GameEvents;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,12 +35,26 @@ namespace Assets.Code.Model {
             Attack();
         }
         bool Attack() {
-            var enemies = tile.GetNeighbors().Select(t => t.entity).Where(e => e is Enemy).Cast<Enemy>();
-            if (!enemies.Any()) return false;
+            Enemy[] enemies = tile.GetNeighbors().Select(t => t.entity).Where(e => e is Enemy).Cast<Enemy>().ToArray();
+            if (enemies.Length == 0) return false;
+            GameEvent filterEvent = new GameEvent() {
+                type = GameEventType.AttackFilterTargets,
+                source = this,
+                enemies = enemies,
+            }.Trigger();
+            enemies = filterEvent.enemies;
+            if (enemies.Length == 0) return false;
             int minHealth = enemies.Min(e => e.health);
-            Enemy target = enemies.Where(e => e.health == minHealth).ToArray().Pick();
+            Enemy[] targets = enemies.Where(e => e.health == minHealth).ToArray();
+            Enemy target = targets.Pick();
             if (target == null) return false;
-            target.Damage(GetAttack());
+            GameEvent damageEvent = new GameEvent() {
+                type = GameEventType.AttackBeforeDamage,
+                source = this,
+                target = target,
+                amount = GetAttack(),
+            }.Trigger();
+            target.Damage(damageEvent.amount);
             if (target.isDead) {
                 GameManagerScript.events.Trigger(new GameEvent() {
                     type = GameEventType.EnemyKilled,

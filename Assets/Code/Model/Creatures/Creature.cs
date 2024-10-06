@@ -4,8 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Code.Model {
-    public abstract class Creature {
+namespace Assets.Code.Model.Creatures {
+    public partial class Creature {
         public Party party;
         public string name;
         public int cost;
@@ -20,6 +20,9 @@ namespace Assets.Code.Model {
             foreach (CreatureAbility ability in abilities) {
                 ability.AttachTo(this);
             }
+        }
+        public Creature Clone() {
+            return new Creature(name, cost, attack, abilities.Select(a => a.Clone()).Cast<CreatureAbility>().ToArray());
         }
 
         public int GetAttack() {

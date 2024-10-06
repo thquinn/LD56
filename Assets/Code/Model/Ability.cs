@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Code.Model.Creatures;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,7 @@ namespace Assets.Code.Model {
         public Ability(string name) {
             this.name = name;
         }
+        public abstract Ability Clone();
         public abstract string GetDescription();
     }
 

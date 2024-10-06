@@ -1,5 +1,6 @@
 using Assets.Code;
 using Assets.Code.Model;
+using Assets.Code.Model.Creatures;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

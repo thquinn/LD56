@@ -1,5 +1,6 @@
 ﻿using Assets.Code.Model.Creatures;
 using Assets.Code.Model.GameEvents;
+using Assets.Code.Model.Research;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace Assets.Code.Model {
         public int time, money, researchPoints;
         public int waitTicks;
         public Expedition expedition;
+        public ResearchTree researchTree;
         public ResearchStatus researchStatus;
         public Shop shop;
         public Debt debt;
@@ -24,6 +26,7 @@ namespace Assets.Code.Model {
         }
         public void Init() {
             time = 100;
+            researchTree = new ResearchTree();
             researchStatus = ResearchStatus.STARTING_STATUS;
             board = new Board(this);
             shop = new Shop(this);

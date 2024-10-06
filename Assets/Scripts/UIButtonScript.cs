@@ -8,7 +8,7 @@ public class UIButtonScript : MonoBehaviour
 {
     static float DAMP_TIME = .05f;
     static Vector3 HOVERED_SCALE_BACK = new Vector3(1.1f, 1.1f, 1);
-    static Vector3 HOVERED_SCALE_FILL = new Vector3(1.2f, 1.2f, 1);
+    static Vector3 HOVERED_SCALE_FILL = new Vector3(1.15f, 1.15f, 1);
 
     public RectTransform rtBack, rtFill;
     public Image imageBack;
