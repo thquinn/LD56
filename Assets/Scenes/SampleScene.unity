@@ -1122,6 +1122,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0a6234a36c80664fbfc82d079b3d4ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefabCreatureParty: {fileID: 2306993973794018972, guid: 085d91f57390ab341af2a355654f8b8e,
+    type: 3}
 --- !u!4 &998277523
 Transform:
   m_ObjectHideFlags: 0
@@ -1538,6 +1540,7 @@ MonoBehaviour:
   goSprites: {fileID: 259793942}
   goRing: {fileID: 1119086573}
   goAttack: {fileID: 1578369534}
+  goCost: {fileID: 2134339182}
 --- !u!1 &1615884898
 GameObject:
   m_ObjectHideFlags: 0
