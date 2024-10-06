@@ -69,8 +69,8 @@ public class UIExpeditionPanelScript : MonoBehaviour
             Cancel();
             return;
         }
-        tmpTime.text = $"{expedition.GetTimeCost()}<sprite name=\"time\" tint=1>";
-        tmpResearch.text = $"{expedition.GetResearchGain()}<sprite name=\"research\" tint=1>";
+        tmpTime.text = $"<sprite name=\"time\" tint=1>{expedition.GetTimeCost()}";
+        tmpResearch.text = $"<sprite name=\"research\" tint=1>{expedition.GetResearchGain()}";
         tmpLoss.text = $"{expedition.GetLossPercent()}%";
     }
 

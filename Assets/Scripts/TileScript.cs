@@ -1,7 +1,9 @@
 using Assets.Code;
 using Assets.Code.Model;
+using Assets.Code.Model.Creatures;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class TileScript : MonoBehaviour
@@ -9,7 +11,7 @@ public class TileScript : MonoBehaviour
     public GameObject prefabSpawner;
 
     public MeshRenderer meshRenderer;
-    public GameObject fog, fogIcon, selectionExplore;
+    public GameObject fog, fogIcon, selectionTile, selectionExplore;
     public Collider colliderTile, colliderFog;
 
     public Tile tile;
@@ -34,6 +36,9 @@ public class TileScript : MonoBehaviour
     void Update() {
         fog.SetActive(!tile.revealed);
         fogIcon.SetActive(!tile.revealed && tile.feature != null && tile.distanceToRevealed <= game.researchStatus.fogVisionRadius);
+        bool tileSelect = !InteractionScript.IsSpawningNewParty() && BoardScript.instance.hoveredTile == tile;
+        tileSelect |= InteractionScript.IsSpawningNewParty() && tile.GetNeighbors().Any(t => t.entity?.HasAbility(CreatureAbilityHome.NAME) == true);
+        selectionTile.SetActive(tileSelect);
         bool fogSelect = UIExpeditionPanelScript.IsSelectedForExploration(tile);
         fogSelect |= BoardScript.instance.hoveredFogTile == tile && UIExpeditionPanelScript.CanToggle(tile);
         fogSelect |= BoardScript.instance.hoveredFogTile == tile && tile.distanceToRevealed == 1 && InteractionScript.GetGrabbed()?.CanExplore(tile) == true;

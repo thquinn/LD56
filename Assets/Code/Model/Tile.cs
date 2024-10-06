@@ -56,7 +56,9 @@ namespace Assets.Code.Model {
                 entity.tileMovingFrom = null;
                 entity.tileMovingTo = null;
             }
-            feature?.AfterTick();
+            if (revealed) {
+                feature?.AfterTick();
+            }
         }
     }
 }

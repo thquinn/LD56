@@ -1,21 +1,31 @@
-﻿using System;
+﻿using Assets.Code.Model.Creatures;
+using Assets.Code.Model.GameEvents;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Assets.Code.Model {
-    public class Game {
+    public partial class Game {
+        public GameEventManager gameEventManager;
         public Board board;
         public int time, money, researchPoints;
         public int waitTicks;
         public Expedition expedition;
         public ResearchStatus researchStatus;
+        public Shop shop;
 
         public Game() {
+            gameEventManager = new GameEventManager();
+            
+        }
+        public void Init() {
+            time = 100;
             researchStatus = ResearchStatus.STARTING_STATUS;
             board = new Board(this);
-            time = 100;
+            shop = new Shop(this);
         }
 
         public void Tick() {

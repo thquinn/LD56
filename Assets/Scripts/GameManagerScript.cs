@@ -1,5 +1,7 @@
 using Assets.Code;
 using Assets.Code.Model;
+using Assets.Code.Model.Creatures;
+using Assets.Code.Model.GameEvents;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +10,9 @@ using UnityEngine;
 public class GameManagerScript : MonoBehaviour
 {
     public static GameManagerScript instance;
+    public static GameEventManager events {
+        get { return instance.game.gameEventManager; }
+    }
 
     public GameObject prefabCreatureParty, prefabEnemy;
 
@@ -18,6 +23,7 @@ public class GameManagerScript : MonoBehaviour
     void Start() {
         instance = this;
         game = new Game();
+        game.Init();
         entityScripts = new Dictionary<Entity, EntityScript>();
         pauser = new Pauser();
     }
@@ -36,6 +42,14 @@ public class GameManagerScript : MonoBehaviour
         // DEBUG
         if (Input.GetKeyDown(KeyCode.Space) && pauser.IsUnpaused()) {
             game.Tick();
+        }
+        if (Input.GetKeyDown(KeyCode.F1)) {
+            game.time += 100;
+            game.money += 1000;
+            game.researchPoints += 100;
+        }
+        if (Input.GetKeyDown(KeyCode.F2)) {
+            game.shop.AddSlot();
         }
     }
 

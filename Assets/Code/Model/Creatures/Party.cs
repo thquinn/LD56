@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Code.Model.GameEvents;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -39,6 +40,13 @@ namespace Assets.Code.Model {
             Enemy target = enemies.Where(e => e.health == minHealth).ToArray().Pick();
             if (target == null) return false;
             target.Damage(GetAttack());
+            if (target.isDead) {
+                GameManagerScript.events.Trigger(new GameEvent() {
+                    type = GameEventType.EnemyKilled,
+                    source = this,
+                    target = target,
+                });
+            }
             return true;
         }
     }

@@ -11,12 +11,16 @@ namespace Assets.Code.Model {
         public Ability(string name) {
             this.name = name;
         }
+        public abstract string GetDescription();
     }
 
     public abstract class CreatureAbility : Ability {
         public Creature creature;
 
         public CreatureAbility(string name) : base(name) { }
+        public virtual void AttachTo(Creature creature) {
+            this.creature = creature;
+        }
     }
 
     public abstract class EnemyAbility : Ability {

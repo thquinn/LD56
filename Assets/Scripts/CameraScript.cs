@@ -24,11 +24,11 @@ public class CameraScript : MonoBehaviour {
             lookAt += (Input.GetKey(KeyCode.S) ? -1 : 1) * forwardMoveVector * panSensitivity * Time.deltaTime * distance;
         }
         distance *= Mathf.Pow(scrollSensitivity, -Input.mouseScrollDelta.y);
-        distance = Mathf.Clamp(distance, 4, 10);
+        distance = Mathf.Clamp(distance, 3, 10);
         if (Input.GetMouseButton(1)) {
             horizontalAngle -= Input.GetAxis("Mouse X") * rotateSensitivity;
             verticalAngle -= Input.GetAxis("Mouse Y") * rotateSensitivity;
-            verticalAngle = Mathf.Clamp(verticalAngle, Mathf.PI * .1f, Mathf.PI * .49f);
+            verticalAngle = Mathf.Clamp(verticalAngle, Mathf.PI * .1f, Mathf.PI * .4f);
         }
 
         // Set position.

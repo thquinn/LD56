@@ -48,6 +48,7 @@ MonoBehaviour:
   prefabCreature: {fileID: 3767742426622489062, guid: 57f7e533b7a5e7846918b6ecd1f804df,
     type: 3}
   ring: {fileID: 3248004009985667291}
+  tmpAttack: {fileID: 5230603597055429963}
 --- !u!1 &3248004009985667291
 GameObject:
   m_ObjectHideFlags: 0

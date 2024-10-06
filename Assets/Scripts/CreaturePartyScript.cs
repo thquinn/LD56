@@ -2,6 +2,7 @@ using Assets.Code;
 using Assets.Code.Model;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class CreaturePartyScript : EntityScript<Party>
@@ -12,6 +13,7 @@ public class CreaturePartyScript : EntityScript<Party>
     public GameObject prefabCreature;
 
     public GameObject ring;
+    public TextMeshPro tmpAttack;
 
     Party party;
     Dictionary<Creature, CreatureScript> creatureScripts;
@@ -54,5 +56,6 @@ public class CreaturePartyScript : EntityScript<Party>
         pauseSource.Set(moving);
         // Attack ring.
         ring.SetActive(transform.localPosition.y < .01f);
+        tmpAttack.text = party.GetAttack().ToString();
     }
 }

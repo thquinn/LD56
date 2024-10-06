@@ -29,6 +29,8 @@ public class VFXAnimatedSpriteScript : MonoBehaviour
             animationFrame = nextAnimationFrame;
             string frameName = $"{creatureScript.creature.name.ToLower()}_{animationFrame}";
             Sprite spriteMain = atlasCreatures.GetSprite(frameName);
+            Sprite[] sprites = new Sprite[atlasCreatures.spriteCount];
+            atlasCreatures.GetSprites(sprites);
             Sprite spriteBlur = atlasShadows.GetSprite(frameName);
             if (srMain != null) {
                 srMain.sprite = spriteMain;
