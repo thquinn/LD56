@@ -11,6 +11,7 @@ public abstract class MonoBehaviourWithCreature : MonoBehaviour {
 }
 
 public class CreatureScript : MonoBehaviourWithCreature {
+    public Transform spritesTransform;
     public SpriteRenderer srSprite, srBlur, srShadow;
 
     float alphaInitialShadow;
@@ -24,6 +25,8 @@ public class CreatureScript : MonoBehaviourWithCreature {
     }
 
     void Update() {
+        // Center solo units visually.
+        spritesTransform.localPosition = new Vector3(0, 0, creature.party.creatures.Count == 1 ? -.1f : 0);
         // Move animation.
         float moveAnimationY = InteractionScript.IsGrabbed(creature) ? 0 : transform.position.y;
         srSprite.SetAlpha(1 - moveAnimationY * 2);

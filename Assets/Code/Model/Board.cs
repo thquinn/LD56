@@ -65,8 +65,11 @@ namespace Assets.Code.Model {
             }
             // BFS to update fog distance.
             Queue<Tile> queue = new Queue<Tile>();
-            queue.Enqueue(GetTile(Vector2Int.zero));
-            HashSet<Tile> seen = new HashSet<Tile>() { queue.Peek() };
+            HashSet<Tile> seen = new HashSet<Tile>();
+            foreach (Tile revealedTile in GetTiles().Where(tile => tile.revealed)) {
+                queue.Enqueue(revealedTile);
+                seen.Add(revealedTile);
+            }
             while (queue.Count > 0) {
                 Tile current = queue.Dequeue();
                 foreach (Tile neighbor in current.GetNeighbors()) {

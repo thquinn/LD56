@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Assets.Code.Model.Features;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -60,7 +60,16 @@ namespace Assets.Code.Model {
                 if (tile.revealed) continue;
                 // Skip tiles with nearby features.
                 if (Util.GetHexCoorsWithinRange(tile.coor, 2).Select(c => GetTile(c)).Any(t => t?.feature != null)) continue;
-                PlaceFeatureAtCoor(new Spawner(100, 10), tile.coor);
+                // Choose a feature.
+                TileFeature feature;
+                float selector = Random.Range(0, 1.2f);
+                if (selector < 1) {
+                    feature = new Spawner(100, 10);
+                } else {
+                    feature = new Ore(3, 5);
+                }
+                // Place.
+                PlaceFeatureAtCoor(feature, tile.coor);
                 numFeatures--;
                 if (numFeatures == 0) return;
             }

@@ -31,6 +31,7 @@ namespace Assets.Code.Model {
             health -= amount;
             if (health == 0) {
                 Die();
+                tile.board.game.time++;
             }
         }
     }

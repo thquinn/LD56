@@ -16,6 +16,13 @@ namespace Assets.Code.Model {
             this.abilities = abilities;
         }
 
+        public override string GetName() {
+            return "Spawner";
+        }
+        public override string GetDescription() {
+            return $"Spawns an enemy every <sprite name=\"time\" tint=1>{cooldown}.";
+        }
+
         public override void AfterTick() {
             timer++;
             if (timer < cooldown) {

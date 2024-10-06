@@ -1,24 +1,32 @@
 using Assets.Code;
 using Assets.Code.Model;
 using Assets.Code.Model.Creatures;
+using Assets.Code.Model.Features;
+using Assets.Scripts;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class TileScript : MonoBehaviour
-{
+public class TileScript : MonoBehaviour {
     static Quaternion PATH_ROTATION_60 = Quaternion.Euler(0, 0, 60);
     static Quaternion PATH_ROTATION_120 = Quaternion.Euler(0, 0, 120);
 
-    public GameObject prefabSpawner;
+    public GameObject prefabSpawner, prefabOre;
 
     public MeshRenderer meshRenderer;
     public GameObject fog, fogIcon, selectionTile, selectionExplore;
     public Collider colliderTile, colliderFog;
     public SpriteRenderer pathRenderer;
     public Sprite spritePathStraight, spritePathEnd, spritePathTurn60, spritePathTurn120;
+    public SpriteRenderer fogIconRenderer;
+    public ParticleSystem fogParticles;
+    public Sprite spriteFogOre;
+    public Sprite spriteFogOutlineOre;
+    public SpriteRenderer[] grassRenderers;
+    public TextMeshPro tmpDebug;
 
     public Tile tile;
     Game game;
@@ -28,11 +36,19 @@ public class TileScript : MonoBehaviour
     void Start() {
         MaterialPropertyBlock block = new MaterialPropertyBlock();
         float h = Random.Range(150f, 165f) / 360f;
-        float s = Random.Range(.5f, .75f);
+        float s = Random.Range(.5f, .65f);
         float v = Random.Range(.85f, 1f);
+        Color color = Color.HSVToRGB(h, s, v);
         meshRenderer.GetPropertyBlock(block);
-        block.SetColor("_Color", Color.HSVToRGB(h, s, v));
+        block.SetColor("_Color", color);
         meshRenderer.SetPropertyBlock(block);
+        foreach (SpriteRenderer grassRenderer in grassRenderers) {
+            if (Random.value < .2f) {
+                grassRenderer.color = color;
+            } else {
+                grassRenderer.gameObject.SetActive(false);
+            }
+        }
     }
     public void Init(Tile tile) {
         this.tile = tile;
@@ -52,14 +68,21 @@ public class TileScript : MonoBehaviour
         fogSelect |= BoardScript.instance.hoveredFogTile == tile && tile.distanceToRevealed == 1 && InteractionScript.GetGrabbed()?.CanExplore(tile) == true;
         selectionExplore.SetActive(fogSelect);
         if (tile.revealed && tile.feature != null && featureObject == null) {
+            var fogShape = fogParticles.shape;
             if (tile.feature is Spawner) {
                 featureObject = Instantiate(prefabSpawner, transform);
+            } else if (tile.feature is Ore) {
+                featureObject = Instantiate(prefabOre, transform);
+                fogIconRenderer.sprite = spriteFogOre;
+                fogShape.sprite = spriteFogOutlineOre;
+                fogShape.texture = spriteFogOutlineOre.texture;
             }
         }
         if (path != InteractionScript.instance.path) {
             path = InteractionScript.instance.path;
             UpdatePath();
         }
+        tmpDebug.text = tile.distanceToRevealed.ToString();
     }
 
     void UpdatePath() {
