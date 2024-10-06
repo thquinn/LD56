@@ -7,12 +7,12 @@ public class UIUnitScript : MonoBehaviour
 {
     public GameObject goSprites, goRing, goAttack, goCost;
 
-    CreatureParty party;
+    Party party;
 
     void Start() {
-        Init(new CreatureParty(new Creature(3)));
+        Init(new Party(new Creature(3)));
     }
-    public void Init(CreatureParty party) {
+    public void Init(Party party) {
         this.party = party;
     }
 

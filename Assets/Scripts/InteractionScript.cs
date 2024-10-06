@@ -42,7 +42,7 @@ public class InteractionScript : MonoBehaviour
             Tile targetTile = boardScript.hoveredTile;
             if (targetTile != grabbedEntity.tile && targetTile?.CanBeMovedTo() == true) {
                 // Move the entity.
-                if ((grabbedEntity as CreatureParty).tile != null) {
+                if ((grabbedEntity as Party).tile != null) {
                     boardScript.hoveredTile.MoveEntityHereSlow(grabbedEntity, 1);
                 } else {
                     boardScript.hoveredTile.MoveEntityHereImmediate(grabbedEntity);
@@ -50,7 +50,7 @@ public class InteractionScript : MonoBehaviour
             }
             if (targetTile.distanceToRevealed == 1 && grabbedEntity.CanExplore(targetTile)) {
                 // Start an expedition.
-                UIExpeditionPanelScript.StartExpedition(grabbedEntity as CreatureParty, targetTile);
+                UIExpeditionPanelScript.StartExpedition(grabbedEntity as Party, targetTile);
             }
             grabbedEntity = null;
             if (floatingParty != null) {
@@ -69,10 +69,10 @@ public class InteractionScript : MonoBehaviour
     public static Entity GetGrabbed() {
         return instance.grabbedEntity;
     }
-    public static void SetGrabbed(CreatureParty party) {
+    public static void SetGrabbed(Party party) {
         instance.SetGrabbedImpl(party);
     }
-    void SetGrabbedImpl(CreatureParty party) {
+    void SetGrabbedImpl(Party party) {
         grabbedEntity = party;
         if (party.tile == null) {
             floatingParty = Instantiate(prefabCreatureParty, transform).GetComponent<CreaturePartyScript>();

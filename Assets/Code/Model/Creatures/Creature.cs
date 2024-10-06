@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Code.Model {
     public class Creature {
-        public CreatureParty party;
+        public Party party;
         int attack;
 
         public Creature(int attack) {

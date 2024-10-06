@@ -25,10 +25,10 @@ public class UIExpeditionPanelScript : MonoBehaviour
         
     }
 
-    public static void StartExpedition(CreatureParty party, Tile tile) {
+    public static void StartExpedition(Party party, Tile tile) {
         instance?.StartExpeditionImpl(party, tile);
     }
-    void StartExpeditionImpl(CreatureParty party, Tile tile) {
+    void StartExpeditionImpl(Party party, Tile tile) {
         gameObject.SetActive(true);
         expedition.party = party;
         tmpStrength.text = party.GetAttack().ToString();

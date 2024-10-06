@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Code.Model {
-    public class CreatureParty : Entity {
+    public class Party : Entity {
         public List<Creature> creatures;
 
-        public CreatureParty(params Creature[] creatures) {
+        public Party(params Creature[] creatures) {
             this.creatures = creatures.ToList();
             foreach (Creature creature in creatures) {
                 creature.party = this;

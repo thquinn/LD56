@@ -24,8 +24,8 @@ public class GameManagerScript : MonoBehaviour
 
     void Update() {
         foreach (Entity entity in game.board.GetTiles().Select(t => t.entity).Where(e => e != null && !entityScripts.ContainsKey(e))) {
-            if (entity is CreatureParty) {
-                entityScripts[entity] = Instantiate(prefabCreatureParty, transform).GetComponent<CreaturePartyScript>().Init(entity as CreatureParty);
+            if (entity is Party) {
+                entityScripts[entity] = Instantiate(prefabCreatureParty, transform).GetComponent<CreaturePartyScript>().Init(entity as Party);
             } else if (entity is Enemy) {
                 entityScripts[entity] = Instantiate(prefabEnemy, transform).GetComponent<EnemyScript>().Init(entity as Enemy);
             }

@@ -3,11 +3,14 @@ Shader "thquinn/OverlapShader"
     Properties {
         _Alpha ("Alpha", Range(0, 1)) = .5
         [PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
+        _Color ("Color", Color) = (1, 0, 0, 1)
+        [Enum(UnityEngine.Rendering.CompareFunction)] _ZTest ("ZTest", Int) = 4
     }
 
         Category {
         Tags { "Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent" "PreviewType"="Plane" }
         Blend SrcAlpha OneMinusSrcAlpha
+        ZTest [_ZTest]
 
         Stencil {
                 Ref 10
@@ -46,11 +49,13 @@ Shader "thquinn/OverlapShader"
 
     float _Alpha;
     sampler2D _MainTex;
+    float4 _Color;
 
     fixed4 frag (v2f i) : SV_Target
     {
         fixed4 tex = tex2D (_MainTex, i.texcoord);
-        fixed4 col = fixed4(0, 0, 0, _Alpha * tex.a);
+        fixed4 col = _Color;
+        col.a *= _Alpha * tex.a;
         return col;
     }
         ENDCG

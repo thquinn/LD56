@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Assets.Code.Model {
     public class Expedition {
-        public CreatureParty party;
+        public Party party;
         public HashSet<Tile> tiles;
 
         public Expedition() {
