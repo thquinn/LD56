@@ -25,9 +25,7 @@ namespace Assets.Code.Model {
                     CreateTile(x, y);
                 }
             }
-            foreach (Tile tile in Util.GetHexCoorsWithinRange(Vector2Int.zero, STARTING_VISION_RADIUS).Select(c => GetTile(c)).Where(t => t != null)) {
-                RevealTile(tile);
-            }
+            RevealTiles(Util.GetHexCoorsWithinRange(Vector2Int.zero, STARTING_VISION_RADIUS).Select(c => GetTile(c)).Where(t => t != null));
             SpawnEntityAtCoor(new CreatureParty(new Creature(3)), -Vector2Int.one);
             PlaceFeatureAtCoor(new Spawner(100, 10), new Vector2Int(1, 0));
             PopulateNewTiles(tilesByRecent);
@@ -59,10 +57,23 @@ namespace Assets.Code.Model {
             return tilesByRecent.Count;
         }
 
-        public void RevealTile(Tile tile) {
-            tile.revealed = true;
-            foreach (Tile nearbyTile in Util.GetHexCoorsWithinRange(tile.coor, game.researchStatus.fogVisionRadius).Select(c => GetTile(c)).Where(t => t != null)) {
-                nearbyTile.featureVisibleInFog = true;
+        public void RevealTiles(IEnumerable<Tile> tilesToReveal) {
+            foreach (Tile tile in tilesToReveal) {
+                tile.revealed = true;
+                tile.distanceToRevealed = 0;
+            }
+            // BFS to update fog distance.
+            Queue<Tile> queue = new Queue<Tile>();
+            queue.Enqueue(GetTile(Vector2Int.zero));
+            HashSet<Tile> seen = new HashSet<Tile>() { queue.Peek() };
+            while (queue.Count > 0) {
+                Tile current = queue.Dequeue();
+                foreach (Tile neighbor in current.GetNeighbors()) {
+                    if (seen.Contains(neighbor)) continue;
+                    neighbor.distanceToRevealed = Mathf.Min(neighbor.distanceToRevealed, current.distanceToRevealed + 1);
+                    queue.Enqueue(neighbor);
+                    seen.Add(neighbor);
+                }
             }
         }
 

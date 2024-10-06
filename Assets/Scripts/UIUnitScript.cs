@@ -17,6 +17,7 @@ public class UIUnitScript : MonoBehaviour
     }
 
     void Update() {
+        if (party == null) return;
         if (party.tile != null) {
             // This unit has been placed.
             party = null;

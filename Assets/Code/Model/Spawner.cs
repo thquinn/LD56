@@ -17,7 +17,7 @@ namespace Assets.Code.Model {
             this.abilities = abilities;
         }
 
-        public override void Tick() {
+        public override void AfterTick() {
             timer++;
             if (timer < cooldown) {
                 return;

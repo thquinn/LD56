@@ -9,6 +9,8 @@ namespace Assets.Code.Model {
         public Tile tile, tileMovingFrom, tileMovingTo;
         public bool isDead;
 
+        public virtual bool CanExplore(Tile tile) { return false; }
+
         public abstract void Tick();
         public void Die() {
             isDead = true;

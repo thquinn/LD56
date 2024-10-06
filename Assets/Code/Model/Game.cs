@@ -8,7 +8,8 @@ namespace Assets.Code.Model {
     public class Game {
         public Board board;
         public int time, money, researchPoints;
-        // Research.
+        public int waitTicks;
+        public Expedition expedition;
         public ResearchStatus researchStatus;
 
         public Game() {
@@ -21,11 +22,24 @@ namespace Assets.Code.Model {
             foreach (Entity entity in board.GetTiles().Select(t => t.entity).Where(e => e != null).ToArray().Shuffle()) {
                 entity.Tick();
             }
+            time--;
+            if (waitTicks > 0) waitTicks--;
             foreach (Tile tile in board.GetTiles()) {
-                tile.Tick();
+                tile.AfterTick();
+            }
+            if (waitTicks == 0) {
+                if (expedition != null) {
+                    board.RevealTiles(expedition.tiles);
+                    researchPoints += expedition.GetResearchGain();
+                    expedition = null;
+                }
             }
             board.ExpansionCheck();
-            time--;
+        }
+
+        public void StartExpedition(Expedition expedition) {
+            this.expedition = expedition;
+            waitTicks = expedition.GetTimeCost();
         }
     }
 }

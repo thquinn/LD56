@@ -16,6 +16,9 @@ namespace Assets.Code.Model {
             }
         }
 
+        public override bool CanExplore(Tile otherTile) {
+            return tile != null && Util.HexagonalDistance(tile.coor, otherTile.coor) == 1;
+        }
         public int GetAttack() {
             return creatures.Select(c => c.GetAttack()).Sum();
         }

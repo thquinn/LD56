@@ -8,6 +8,6 @@ namespace Assets.Code.Model {
     public abstract class TileFeature {
         public Tile tile;
 
-        public abstract void Tick();
+        public abstract void AfterTick();
     }
 }

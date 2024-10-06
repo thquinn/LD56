@@ -1,3 +1,4 @@
+using Assets.Code;
 using Assets.Code.Model;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,8 +10,10 @@ public class InteractionScript : MonoBehaviour
 
     public GameObject prefabCreatureParty;
 
+    public UIExpeditionPanelScript expeditionScript;
+
     BoardScript boardScript;
-    public Entity grabbedEntity;
+    Entity grabbedEntity;
     CreaturePartyScript floatingParty;
 
     void Start() {
@@ -19,11 +22,23 @@ public class InteractionScript : MonoBehaviour
     }
 
     void Update() {
-        if (!GameManagerScript.IsUnpaused()) return;
-        if (Input.GetMouseButtonDown(0) && grabbedEntity == null) {
+        if (!GameManagerScript.IsInteractable()) return;
+        if (Input.GetMouseButtonDown(0)) {
+            UpdateMouseDown();
+        }
+        if (Input.GetMouseButtonUp(0)) {
+            UpdateMouseUp();
+        }
+    }
+    void UpdateMouseDown() {
+        if (UIExpeditionPanelScript.IsActive() && boardScript.hoveredFogTile != null) {
+            UIExpeditionPanelScript.Toggle(boardScript.hoveredFogTile);
+        } else if (grabbedEntity == null) {
             grabbedEntity = boardScript.hoveredTile?.entity;
         }
-        if (Input.GetMouseButtonUp(0) && grabbedEntity != null) {
+    }
+    void UpdateMouseUp() {
+        if (grabbedEntity != null) {
             Tile targetTile = boardScript.hoveredTile;
             if (targetTile != grabbedEntity.tile && targetTile?.CanBeMovedTo() == true) {
                 // Move the entity.
@@ -32,6 +47,10 @@ public class InteractionScript : MonoBehaviour
                 } else {
                     boardScript.hoveredTile.MoveEntityHereImmediate(grabbedEntity);
                 }
+            }
+            if (targetTile.distanceToRevealed == 1 && grabbedEntity.CanExplore(targetTile)) {
+                // Start an expedition.
+                UIExpeditionPanelScript.StartExpedition(grabbedEntity as CreatureParty, targetTile);
             }
             grabbedEntity = null;
             if (floatingParty != null) {
@@ -46,6 +65,9 @@ public class InteractionScript : MonoBehaviour
     }
     public static bool IsGrabbed(Creature creature) {
         return creature.party == instance.grabbedEntity;
+    }
+    public static Entity GetGrabbed() {
+        return instance.grabbedEntity;
     }
     public static void SetGrabbed(CreatureParty party) {
         instance.SetGrabbedImpl(party);

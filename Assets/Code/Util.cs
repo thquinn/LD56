@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEditor.ShaderGraph;
 using UnityEngine;
 
@@ -47,6 +48,23 @@ namespace Assets.Code {
                     yield return CubeCoorToBoard(cube + new Vector3Int(q, r, s));
                 }
             }
+        }
+        public static bool CoorsWouldBeContiguousWithout(HashSet<Vector2Int> coors, Vector2Int except) {
+            Debug.Assert(coors.Contains(except), "Tile contiguity check without exception in set.");
+            if (coors.Count == 1) return true;
+            Queue<Vector2Int> queue = new Queue<Vector2Int>();
+            queue.Enqueue(coors.First(c => c != except));
+            HashSet<Vector2Int> seen = new HashSet<Vector2Int>() { queue.Peek() };
+            while (queue.Count > 0) {
+                Vector2Int current = queue.Dequeue();
+                foreach (Vector2Int neighbor in GetNeighboringHexCoors(current)) {
+                    if (!coors.Contains(neighbor)) continue;
+                    if (seen.Contains(neighbor) || neighbor == except) continue;
+                    queue.Enqueue(neighbor);
+                    seen.Add(neighbor);
+                }
+            }
+            return seen.Count == coors.Count - 1;
         }
         static Vector3Int BoardCoorToCube(Vector2Int coor) {
             int q = coor.x;

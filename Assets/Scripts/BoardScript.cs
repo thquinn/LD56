@@ -10,25 +10,30 @@ public class BoardScript : MonoBehaviour
 
     public GameObject prefabTile;
 
-    public LayerMask layerMaskTile;
+    public LayerMask layerMaskTile, layerMaskFog;
 
     Board board;
-    Dictionary<Collider, TileScript> tileScripts;
-    public Tile hoveredTile;
+    Dictionary<Collider, TileScript> colliderToTile;
+    public Tile hoveredTile, hoveredFogTile;
+    int tileScriptCount;
 
     void Start() {
         instance = this;
         board = GameManagerScript.instance.game.board;
-        tileScripts = new Dictionary<Collider, TileScript>();
+        colliderToTile = new Dictionary<Collider, TileScript>();
     }
 
     void Update() {
-        foreach (Tile tile in board.GetTilesFromIndex(tileScripts.Count)) {
+        foreach (Tile tile in board.GetTilesFromIndex(tileScriptCount)) {
             TileScript tileScript = Instantiate(prefabTile, transform).GetComponent<TileScript>();
             tileScript.Init(tile);
-            tileScripts[tileScript.GetComponentInChildren<Collider>()] = tileScript;
+            colliderToTile[tileScript.colliderTile] = tileScript;
+            colliderToTile[tileScript.colliderFog] = tileScript;
+            tileScriptCount++;
         }
-        Collider hoveredCollider = Util.GetMouseCollider(layerMaskTile);
-        hoveredTile = hoveredCollider == null ? null : tileScripts[hoveredCollider].tile;
+        Collider hoveredTileCollider = Util.GetMouseCollider(layerMaskTile);
+        Collider hoveredFogCollider = Util.GetMouseCollider(layerMaskFog);
+        hoveredTile = hoveredTileCollider == null ? null : colliderToTile[hoveredTileCollider].tile;
+        hoveredFogTile = hoveredFogCollider == null ? null : colliderToTile[hoveredFogCollider].tile;
     }
 }

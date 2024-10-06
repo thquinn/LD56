@@ -30,7 +30,7 @@ public class GameManagerScript : MonoBehaviour
                 entityScripts[entity] = Instantiate(prefabEnemy, transform).GetComponent<EnemyScript>().Init(entity as Enemy);
             }
         }
-        if (IsWaitingForTicks() && pauser.IsUnpaused()) {
+        if (game.waitTicks > 0 && pauser.IsUnpaused()) {
             game.Tick();
         }
         // DEBUG
@@ -39,15 +39,10 @@ public class GameManagerScript : MonoBehaviour
         }
     }
 
-    bool IsWaitingForTicks() {
-        if (game.board.GetTiles().Any(t => t.moveTicksLeft > 0)) return true;
-        return false;
-    }
-
     internal static PauseSource GetPauseSource() {
         return instance.pauser.GetSource();
     }
-    internal static bool IsUnpaused() {
-        return instance.pauser.IsUnpaused();
+    internal static bool IsInteractable() {
+        return instance.game.waitTicks == 0 && instance.pauser.IsUnpaused();
     }
 }

@@ -10,14 +10,14 @@ namespace Assets.Code.Model {
         public Board board;
         public Vector2Int coor;
         public bool revealed;
+        public int distanceToRevealed;
         public Entity entity, entityMovingFrom, entityMovingTo;
         public TileFeature feature;
-        public bool featureVisibleInFog;
-        public int moveTicksLeft;
 
         public Tile(Board board, Vector2Int coor) {
             this.board = board;
             this.coor = coor;
+            distanceToRevealed = 999;
         }
 
         public IEnumerable<Tile> GetNeighbors() {
@@ -44,22 +44,19 @@ namespace Assets.Code.Model {
             entity.tile = null;
             entity.tileMovingTo = this;
             entityMovingTo = entity;
-            moveTicksLeft = ticks;
+            board.game.waitTicks = ticks;
         }
 
-        public void Tick() {
-            if (entityMovingTo != null) {
-                moveTicksLeft--;
-                if (moveTicksLeft == 0) {
-                    entity = entityMovingTo;
-                    entity.tile = this;
-                    entityMovingTo = null;
-                    entity.tileMovingFrom.entityMovingFrom = null;
-                    entity.tileMovingFrom = null;
-                    entity.tileMovingTo = null;
-                }
+        public void AfterTick() {
+            if (entityMovingTo != null && board.game.waitTicks == 0) {
+                entity = entityMovingTo;
+                entity.tile = this;
+                entityMovingTo = null;
+                entity.tileMovingFrom.entityMovingFrom = null;
+                entity.tileMovingFrom = null;
+                entity.tileMovingTo = null;
             }
-            feature?.Tick();
+            feature?.AfterTick();
         }
     }
 }
