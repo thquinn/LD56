@@ -3,11 +3,26 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEditor;
+using UnityEditor.U2D.Sprites;
 using UnityEngine;
 using static UnityEditor.Rendering.CameraUI;
 
 public class ShadowPaddingPostprocessor : AssetPostprocessor {
     public void OnPostprocessTexture(Texture2D texture) {
+        // Rename frames.
+        var factory = new SpriteDataProviderFactories();
+        factory.Init();
+        var dataProvider = factory.GetSpriteEditorDataProviderFromObject(assetImporter);
+        dataProvider.InitSpriteEditorDataProvider();
+        var rects = dataProvider.GetSpriteRects();
+        if (rects.Length > 0) {
+            for (int i = 0; i < rects.Length; i++) {
+                rects[i].name = $"{texture.name}_{i}";
+            }
+            dataProvider.SetSpriteRects(rects);
+            dataProvider.Apply();
+        }
+        // Create shadows.
         if (!assetPath.StartsWith("Assets/Sprites/Creatures")) return;
         Debug.Log("ShadowPaddingPostprocessor");
         int spriteCount = texture.width / 12;
