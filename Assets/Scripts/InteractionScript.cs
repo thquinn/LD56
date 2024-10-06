@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class InteractionScript : MonoBehaviour
 {
-    static InteractionScript instance;
+    public static InteractionScript instance;
 
     public GameObject prefabCreatureParty;
 
@@ -18,6 +18,8 @@ public class InteractionScript : MonoBehaviour
     BoardScript boardScript;
     Entity grabbedEntity;
     CreaturePartyScript floatingParty;
+    Tile lastPathTile;
+    public List<Vector2Int> path;
 
     void Start() {
         instance = this;
@@ -33,6 +35,7 @@ public class InteractionScript : MonoBehaviour
         if (Input.GetMouseButtonUp(0)) {
             UpdateMouseUp();
         }
+        UpdatePath();
     }
     void UpdateMouseDown() {
         if (UIExpeditionPanelScript.IsActive() && boardScript.hoveredFogTile != null) {
@@ -42,33 +45,44 @@ public class InteractionScript : MonoBehaviour
         }
     }
     void UpdateMouseUp() {
-        if (grabbedEntity != null) {
-            Tile targetTile = boardScript.hoveredTile;
-            if (targetTile != grabbedEntity.tile && targetTile?.CanBeMovedTo() == true) {
-                Party party = grabbedEntity as Party;
-                // Move the entity.
-                if (party.tile != null) {
-                    boardScript.hoveredTile.MoveEntityHereSlow(grabbedEntity, 1);
-                } else if (targetTile.GetNeighbors().Any(t => t.entity?.HasAbility(CreatureAbilityHome.NAME) == true)) {
-                    List<Creature> shopCreatures = game.shop.creatures;
-                    int shopIndex = shopCreatures.IndexOf(party.creatures[0]);
-                    Debug.Assert(shopIndex >= 0, "Failed to find purchased creature in the shop.");
-                    if (game.money >= shopCreatures[shopIndex].cost) {
-                        game.shop.Buy(shopIndex);
-                        boardScript.hoveredTile.MoveEntityHereImmediate(grabbedEntity);
-                    }
+        if (grabbedEntity == null) return;
+        Tile targetTile = boardScript.hoveredTile;
+        if (targetTile != grabbedEntity.tile && targetTile?.CanBeMovedTo() == true) {
+            Party party = grabbedEntity as Party;
+            // Move the entity.
+            if (party.tile != null) {
+                var path = game.board.AStar(party.tile.coor, targetTile.coor);
+                boardScript.hoveredTile.MoveEntityHereSlow(grabbedEntity, 1);
+            } else if (targetTile.GetNeighbors().Any(t => t.entity?.HasAbility(CreatureAbilityHome.NAME) == true)) {
+                List<Creature> shopCreatures = game.shop.creatures;
+                int shopIndex = shopCreatures.IndexOf(party.creatures[0]);
+                Debug.Assert(shopIndex >= 0, "Failed to find purchased creature in the shop.");
+                if (game.money >= shopCreatures[shopIndex].cost) {
+                    game.shop.Buy(shopIndex);
+                    boardScript.hoveredTile.MoveEntityHereImmediate(grabbedEntity);
                 }
             }
-            if (targetTile.distanceToRevealed == 1 && grabbedEntity.CanExplore(targetTile)) {
-                // Start an expedition.
-                UIExpeditionPanelScript.StartExpedition(grabbedEntity as Party, targetTile);
-            }
-            grabbedEntity = null;
-            if (floatingParty != null) {
-                Destroy(floatingParty.gameObject);
-                floatingParty = null;
-            }
         }
+        if (targetTile.distanceToRevealed == 1 && grabbedEntity.CanExplore(targetTile)) {
+            // Start an expedition.
+            UIExpeditionPanelScript.StartExpedition(grabbedEntity as Party, targetTile);
+        }
+        grabbedEntity = null;
+        if (floatingParty != null) {
+            Destroy(floatingParty.gameObject);
+            floatingParty = null;
+        }
+    }
+    void UpdatePath() {
+        if (grabbedEntity == null) {
+            lastPathTile = null;
+            path = null;
+            return;
+        }
+        Tile targetTile = boardScript.hoveredTile;
+        if (targetTile == lastPathTile) return;
+        lastPathTile = targetTile;
+        path = game.board.AStar(grabbedEntity.tile.coor, targetTile.coor);
     }
 
     public static bool IsGrabbed(Entity entity) {
@@ -92,5 +106,9 @@ public class InteractionScript : MonoBehaviour
     }
     public static bool IsSpawningNewParty() {
         return instance.floatingParty != null;
+    }
+
+    public static int PathIndex(Tile tile) {
+        return instance.path?.IndexOf(tile.coor) ?? -1;
     }
 }

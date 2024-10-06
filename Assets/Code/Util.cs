@@ -66,12 +66,12 @@ namespace Assets.Code {
             }
             return seen.Count == coors.Count - 1;
         }
-        static Vector3Int BoardCoorToCube(Vector2Int coor) {
+        public static Vector3Int BoardCoorToCube(Vector2Int coor) {
             int q = coor.x;
             int r = coor.y - (coor.x - (coor.x & 1)) / 2;
             return new Vector3Int(q, r, -q - r);
         }
-        static Vector2Int CubeCoorToBoard(Vector3Int coor) {
+        public static Vector2Int CubeCoorToBoard(Vector3Int coor) {
             int x = coor.x;
             int y = coor.y + (coor.x - (coor.x & 1)) / 2;
             return new Vector2Int(x, y);
