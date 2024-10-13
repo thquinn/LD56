@@ -1,6 +1,5 @@
 using Assets.Code.Model;
-using Assets.Code.Model.Creatures;
-using System.Collections;
+using Assets.Scripts;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -12,7 +11,7 @@ public class UIUnitScript : MonoBehaviourWithCreature {
     Game game;
 
     int shopIndex;
-    Party party;
+    public Party party;
 
     public void Init(int shopIndex) {
         game = GameManagerScript.instance.game;

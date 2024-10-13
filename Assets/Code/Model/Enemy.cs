@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Assets.Scripts;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace Assets.Code.Model {
@@ -19,19 +16,25 @@ namespace Assets.Code.Model {
         public override string GetName() {
             return "Enemy";
         }
+        public override Tooltip GetTooltip() {
+            return new Tooltip() {
+                title = GetName(),
+                body = "This is an enemy.",
+            };
+        }
         public override bool HasAbility(string name) {
             return abilities.Any(a => a.name == name);
         }
 
         public override void Tick() {
-            
+
         }
         public void Damage(int amount) {
             amount = Mathf.Min(amount, health);
             health -= amount;
             if (health == 0) {
-                Die();
                 tile.board.game.time++;
+                Die();
             }
         }
     }

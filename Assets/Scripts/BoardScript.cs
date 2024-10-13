@@ -1,11 +1,9 @@
 using Assets.Code;
 using Assets.Code.Model;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BoardScript : MonoBehaviour
-{
+public class BoardScript : MonoBehaviour {
     public static BoardScript instance;
 
     public GameObject prefabTile;

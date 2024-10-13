@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Assets.Code.Model {
+﻿namespace Assets.Code.Model {
     public struct ResearchStatus {
         public int partySize;
         public bool partyMixing;

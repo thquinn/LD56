@@ -1,12 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D;
 using UnityEngine.UI;
-using static TMPro.SpriteAssetUtilities.TexturePacker_JsonArray;
 
-public class VFXAnimatedSpriteScript : MonoBehaviour
-{
+public class VFXAnimatedSpriteScript : MonoBehaviour {
     static float ANIMATION_RATE = 2;
 
     public SpriteAtlas atlasCreatures, atlasShadows;

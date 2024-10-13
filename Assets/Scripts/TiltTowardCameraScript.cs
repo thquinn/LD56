@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class TiltTowardCameraScript : MonoBehaviour
-{
+public class TiltTowardCameraScript : MonoBehaviour {
     public bool x, y;
 
     Camera cam;

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Assets.Code.Model.Research {
+﻿namespace Assets.Code.Model.Research {
     public class ResearchShopSlot : Research {
         public static string GetID(int cost) { return $"shop_slot_{cost}"; }
 

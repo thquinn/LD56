@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Assets.Code.Model.Creatures {
+﻿namespace Assets.Code.Model.Creatures {
     public partial class Creature {
         public static Creature QUEEN = new Creature("Queen", 100, 5, new CreatureAbilityHome());
     }

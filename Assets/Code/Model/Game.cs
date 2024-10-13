@@ -1,12 +1,6 @@
-﻿using Assets.Code.Model.Creatures;
-using Assets.Code.Model.GameEvents;
+﻿using Assets.Code.Model.GameEvents;
 using Assets.Code.Model.Research;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
 
 namespace Assets.Code.Model {
     public partial class Game {
@@ -25,7 +19,8 @@ namespace Assets.Code.Model {
             gameEventManager = new GameEventManager();
         }
         public void Init() {
-            time = 100;
+            time = 200;
+            money = 100;
             researchTree = new ResearchTree();
             researchStatus = ResearchStatus.STARTING_STATUS;
             board = new Board(this);

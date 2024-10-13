@@ -1,14 +1,13 @@
 using Assets.Code;
 using Assets.Code.Model;
 using Assets.Code.Model.Research;
-using System.Collections;
+using Assets.Scripts;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIResearchNodeScript : MonoBehaviour
-{
+public class UIResearchNodeScript : TooltipBehavior {
     static float DAMP_TIME = .2f;
 
     public CanvasGroup canvasGroup;
@@ -36,6 +35,13 @@ public class UIResearchNodeScript : MonoBehaviour
         tmpCost.text = $"{research.cost}<sprite name=\"research\" tint=1>";
     }
 
+    public override IEnumerable<Tooltip> GetTooltips() {
+        yield return new Tooltip() {
+            title = research.name,
+            body = research.description,
+        };
+    }
+
     void Update() {
         if (canvasGroup.enabled) {
             canvasGroup.alpha = Mathf.SmoothDamp(canvasGroup.alpha, 1, ref vAlpha, .2f);
@@ -45,7 +51,7 @@ public class UIResearchNodeScript : MonoBehaviour
         if (tmpCost != null) {
             tmpCost.color = Color.Lerp(Color.black, glowColor, tTextColor);
         }
-        
+
         if (research.unlocked) {
             tButtonColor = Mathf.SmoothDamp(tButtonColor, 1, ref vButtonColor, DAMP_TIME);
             imageButton.color = Color.Lerp(initialButtonColor, glowColor, tButtonColor);

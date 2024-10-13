@@ -1,15 +1,10 @@
 using Assets.Code;
 using Assets.Code.Model;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using Unity.Burst.CompilerServices;
 using UnityEngine;
 
-public class UIExpeditionPanelScript : MonoBehaviour
-{
+public class UIExpeditionPanelScript : MonoBehaviour {
     public static UIExpeditionPanelScript instance;
 
     public TextMeshProUGUI tmpStrength, tmpTime, tmpResearch, tmpLoss;
@@ -22,7 +17,7 @@ public class UIExpeditionPanelScript : MonoBehaviour
     }
 
     void Update() {
-        
+
     }
 
     public static void StartExpedition(Party party, Tile tile) {

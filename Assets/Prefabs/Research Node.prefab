@@ -299,7 +299,7 @@ GameObject:
   - component: {fileID: 3011512057427079853}
   - component: {fileID: 4776286504775602722}
   - component: {fileID: 4279647350472989871}
-  m_Layer: 5
+  m_Layer: 8
   m_Name: Research Node
   m_TagString: Untagged
   m_Icon: {fileID: 0}

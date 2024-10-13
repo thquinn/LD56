@@ -1,10 +1,7 @@
 using Assets.Code.Model;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class UIShopScript : MonoBehaviour
-{
+public class UIShopScript : MonoBehaviour {
     static float SPACING_X = -75f;
     static float SPACING_Y = 110f;
 

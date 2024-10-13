@@ -1,11 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEditor;
 using UnityEditor.U2D.Sprites;
 using UnityEngine;
-using static UnityEditor.Rendering.CameraUI;
 
 public class ShadowPaddingPostprocessor : AssetPostprocessor {
     public void OnPostprocessTexture(Texture2D texture) {

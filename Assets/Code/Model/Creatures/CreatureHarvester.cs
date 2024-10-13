@@ -1,11 +1,4 @@
 ﻿using Assets.Code.Model.GameEvents;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static UnityEngine.UI.CanvasScaler;
-using UnityEngine.SocialPlatforms;
 
 namespace Assets.Code.Model.Creatures {
     public partial class Creature {

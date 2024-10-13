@@ -1,12 +1,9 @@
 using Assets.Code;
 using Assets.Code.Model;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class EnemyScript : EntityScript<Enemy>
-{
+public class EnemyScript : EntityScript<Enemy> {
     public TextMeshPro tmp;
     public ParticleSystem particles;
     public SpriteRenderer srShadow;

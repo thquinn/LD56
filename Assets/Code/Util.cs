@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.ShaderGraph;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,10 +10,17 @@ namespace Assets.Code {
             return Random.value > fract ? Mathf.FloorToInt(f) : Mathf.CeilToInt(f);
         }
 
+        public static string StringJoinCommaAmpersand(string[] strings) {
+            if (strings.Length == 0) return "";
+            if (strings.Length == 1) return strings[0];
+            if (strings.Length == 2) return $"{strings[0]} & {strings[1]}";
+            return $"{string.Join(", ", strings.Take(strings.Length - 1))} & {strings[strings.Length - 1]}";
+        }
+
         public static string IntToDisplayString(int i) {
             if (i < 0) return "-" + IntToDisplayString(-i);
             if (i < 1000) return i.ToString();
-            if (i < 10000) return $"{i / 1000}.{(i % 1000)/100}K";
+            if (i < 10000) return $"{i / 1000}.{(i % 1000) / 100}K";
             if (i < 1e6) return $"{i / 1000}K";
             if (i < 1e7) return $"{i / 1e6}.{(i % 1e6) / 1e5}M";
             return $"{i / 1e6}M";

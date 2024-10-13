@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts {
     public abstract class TooltipBehavior : MonoBehaviour {
-        public abstract List<string> GetTooltip();
+        public abstract IEnumerable<Tooltip> GetTooltips();
+    }
+
+    public struct Tooltip {
+        public string title, body;
+
+        public string GetTMPString() {
+            return $"<font=\"Patrician SDF\"><size=36>{title}</size></font>\n{body}";
+        }
     }
 }

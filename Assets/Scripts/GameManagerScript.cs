@@ -1,14 +1,11 @@
 using Assets.Code;
 using Assets.Code.Model;
-using Assets.Code.Model.Creatures;
 using Assets.Code.Model.GameEvents;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class GameManagerScript : MonoBehaviour
-{
+public class GameManagerScript : MonoBehaviour {
     public static GameManagerScript instance;
     public static GameEventManager events {
         get { return instance.game.gameEventManager; }

@@ -1,9 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class VFXSpawnerScript : MonoBehaviour
-{
+public class VFXSpawnerScript : MonoBehaviour {
     static float MAT_DAMP_TIME = 2f;
 
     public Transform matTransform;

@@ -1,11 +1,8 @@
 ﻿using Assets.Code.Model.Creatures;
 using Assets.Code.Model.GameEvents;
-using System;
+using Assets.Scripts;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
 
 namespace Assets.Code.Model {
     public class Party : Entity {
@@ -21,11 +18,28 @@ namespace Assets.Code.Model {
         public override string GetName() {
             return string.Join(" & ", creatures.Select(c => c.name));
         }
+        public override Tooltip GetTooltip() {
+            return new Tooltip() {
+                title = Util.StringJoinCommaAmpersand(creatures.Select(c => c.name).ToArray()),
+                body = string.Join('\n', GetAbilities().Select(a => $"<b>{a.name}</b>    {a.GetDescription()}")),
+            };
+        }
         public override bool CanExplore(Tile otherTile) {
             return tile != null && Util.HexagonalDistance(tile.coor, otherTile.coor) == 1 && otherTile.distanceToRevealed == 1;
         }
         public override bool HasAbility(string name) {
             return creatures.Any(c => c.abilities.Any(a => a.name == name));
+        }
+        public IEnumerable<Ability> GetAbilities() {
+            HashSet<string> abilityNames = new HashSet<string>();
+            foreach (Creature creature in creatures) {
+                foreach (Ability ability in creature.abilities) {
+                    if (!abilityNames.Contains(ability.name)) {
+                        yield return ability;
+                        abilityNames.Add(ability.name);
+                    }
+                }
+            }
         }
         public int GetAttack() {
             return creatures.Select(c => c.GetAttack()).Sum();

@@ -1,13 +1,11 @@
 using Assets.Code;
 using Assets.Code.Model;
 using Assets.Code.Model.Creatures;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class CreaturePartyScript : EntityScript<Party>
-{
+public class CreaturePartyScript : EntityScript<Party> {
     static float CREATURE_SPACING = .14f;
     static float CREATURE_SCALING = .3f;
     static float MOVE_ANIMATION_Y = .66f;

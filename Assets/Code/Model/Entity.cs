@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Assets.Scripts;
 
 namespace Assets.Code.Model {
     public abstract class Entity {
@@ -10,6 +6,7 @@ namespace Assets.Code.Model {
         public bool isDead;
 
         public abstract string GetName();
+        public abstract Tooltip GetTooltip();
         public virtual bool CanExplore(Tile tile) { return false; }
         public abstract bool HasAbility(string name);
 

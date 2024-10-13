@@ -1,10 +1,8 @@
 using Assets.Code.Model.Research;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIResearchScreenScript : MonoBehaviour
-{
+public class UIResearchScreenScript : MonoBehaviour {
     static float SCALE = 80;
     static float DAMP_TIME = .1f;
 

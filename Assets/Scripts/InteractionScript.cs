@@ -1,15 +1,11 @@
-using Assets.Code;
 using Assets.Code.Model;
 using Assets.Code.Model.Creatures;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 
-public class InteractionScript : MonoBehaviour
-{
+public class InteractionScript : MonoBehaviour {
     public static InteractionScript instance;
 
     public GameObject prefabCreatureParty;
@@ -55,11 +51,11 @@ public class InteractionScript : MonoBehaviour
         Party party = grabbedEntity as Party;
         Tile targetTile = boardScript.hoveredTile;
         if (targetTile != grabbedEntity.tile && targetTile?.CanBeMovedTo() == true) {
-            
+
             // Move the entity.
             if (party.tile != null) {
                 var path = game.board.AStar(party.tile.coor, targetTile.coor);
-                boardScript.hoveredTile.MoveEntityHereSlow(grabbedEntity, 1);
+                boardScript.hoveredTile.MoveEntityHereSlow(grabbedEntity, game.board.GetPathTimeCost(path));
             } else if (targetTile.GetNeighbors().Any(t => t.entity?.HasAbility(CreatureAbilityHome.NAME) == true)) {
                 List<Creature> shopCreatures = game.shop.creatures;
                 int shopIndex = shopCreatures.IndexOf(party.creatures[0]);

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Assets.Code.Model.Research {
+﻿namespace Assets.Code.Model.Research {
     public class ResearchPartyMixing : Research {
         public static string ID = "party_mixing";
         public ResearchPartyMixing() : base(

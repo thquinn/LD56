@@ -2,13 +2,10 @@ using Assets.Code;
 using Assets.Code.Model;
 using Assets.Code.Model.Creatures;
 using Assets.Code.Model.Features;
-using Assets.Scripts;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class TileScript : MonoBehaviour {
     static Quaternion PATH_ROTATION_60 = Quaternion.Euler(0, 0, 60);
@@ -43,7 +40,7 @@ public class TileScript : MonoBehaviour {
         block.SetColor("_Color", color);
         meshRenderer.SetPropertyBlock(block);
         foreach (SpriteRenderer grassRenderer in grassRenderers) {
-            if (Random.value < .2f) {
+            if (Random.value < .5f) {
                 grassRenderer.color = color;
             } else {
                 grassRenderer.gameObject.SetActive(false);

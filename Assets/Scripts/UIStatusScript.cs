@@ -1,12 +1,9 @@
 using Assets.Code;
 using Assets.Code.Model;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class UIStatusScript : MonoBehaviour
-{
+public class UIStatusScript : MonoBehaviour {
     public TextMeshProUGUI tmpTime, tmpMoney, tmpResearch, tmpDebt;
 
     Game game;
