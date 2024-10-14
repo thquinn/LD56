@@ -23,6 +23,16 @@ namespace Assets.Code.Model {
                 if (neighbor != null) yield return neighbor;
             }
         }
+        public IEnumerable<Tile> GetTilesWithin(int range) {
+            foreach (Vector2Int neighborCoor in Util.GetHexCoorsWithinRange(coor, range)) {
+                if (neighborCoor == coor) continue;
+                Tile neighbor = board.GetTile(neighborCoor);
+                if (neighbor != null) yield return neighbor;
+            }
+        }
+        public bool IsOnBorder() {
+            return board.IsBorderCoor(coor);
+        }
 
         public bool CanBeMovedTo() {
             return revealed && entity == null && entityMovingFrom == null && entityMovingTo == null;

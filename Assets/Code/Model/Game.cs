@@ -32,6 +32,7 @@ namespace Assets.Code.Model {
         public void Tick() {
             if (gameOver) return;
             foreach (Entity entity in board.GetTiles().Select(t => t.entity).Where(e => e != null).ToArray().Shuffle()) {
+                if (entity.isDead) continue;
                 entity.Tick();
             }
             LoseTime(1);
@@ -42,8 +43,13 @@ namespace Assets.Code.Model {
             }
             if (waitTicks == 0) {
                 if (expedition != null) {
-                    board.RevealTiles(expedition.tiles);
-                    researchPoints += expedition.GetResearchGain();
+                    expedition.Finish();
+                    if (expedition.state == ExpeditionState.Success) {
+                        board.RevealTiles(expedition.selectedTiles.Concat(expedition.surroundedTiles));
+                        researchPoints += expedition.GetResearchGain();
+                    } else {
+                        expedition.party.Die();
+                    }
                     expedition = null;
                 }
             }
@@ -59,7 +65,7 @@ namespace Assets.Code.Model {
 
         public void StartExpedition(Expedition expedition) {
             this.expedition = expedition;
-            waitTicks = expedition.GetTimeCost();
+            expedition.Start();
         }
     }
 }

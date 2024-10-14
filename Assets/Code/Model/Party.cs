@@ -27,6 +27,9 @@ namespace Assets.Code.Model {
         public override bool CanExplore(Tile otherTile) {
             return tile != null && Util.HexagonalDistance(tile.coor, otherTile.coor) == 1 && otherTile.distanceToRevealed == 1;
         }
+        public bool Contains(Creature creature) {
+            return creatures.Contains(creature);
+        }
         public override bool HasAbility(string name) {
             return creatures.Any(c => c.abilities.Any(a => a.name == name));
         }
@@ -55,7 +58,12 @@ namespace Assets.Code.Model {
             Attack();
         }
         bool Attack() {
-            Enemy[] enemies = tile.GetNeighbors().Select(t => t.entity).Where(e => e is Enemy).Cast<Enemy>().ToArray();
+            GameEvent rangeEvent = new GameEvent() {
+                type = GameEventType.CalculateRange,
+                source = this,
+                amount = 1,
+            }.Trigger();
+            Enemy[] enemies = tile.GetTilesWithin(rangeEvent.amount).Select(t => t.entity).Where(e => e is Enemy).Cast<Enemy>().ToArray();
             if (enemies.Length == 0) return false;
             GameEvent filterEvent = new GameEvent() {
                 type = GameEventType.AttackFilterTargets,

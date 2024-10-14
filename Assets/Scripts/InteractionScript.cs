@@ -22,6 +22,7 @@ public class InteractionScript : MonoBehaviour {
     CreaturePartyScript floatingParty;
     Tile lastPathTile;
     public List<Vector2Int> path;
+    bool lastExpeditionToggle;
 
     void Start() {
         instance = this;
@@ -33,17 +34,25 @@ public class InteractionScript : MonoBehaviour {
         if (!GameManagerScript.IsInteractable()) return;
         if (Input.GetMouseButtonDown(0)) {
             UpdateMouseDown();
-        }
-        if (Input.GetMouseButtonUp(0)) {
+        } else if (Input.GetMouseButtonUp(0)) {
             UpdateMouseUp();
+        }
+        if (Input.GetMouseButton(0)) {
+            UpdateMouseStayDown();
         }
         UpdatePath();
     }
     void UpdateMouseDown() {
-        if (UIExpeditionPanelScript.IsActive() && boardScript.hoveredFogTile != null) {
-            UIExpeditionPanelScript.Toggle(boardScript.hoveredFogTile);
-        } else if (grabbedEntity == null) {
+        if (grabbedEntity == null) {
             grabbedEntity = boardScript.hoveredTile?.entity;
+        }
+        if (boardScript.hoveredFogTile != null) {
+            lastExpeditionToggle = !UIExpeditionPanelScript.IsSelectedForExploration(boardScript.hoveredFogTile);
+        }
+    }
+    void UpdateMouseStayDown() {
+        if (UIExpeditionPanelScript.IsActive() && boardScript.hoveredFogTile != null && UIExpeditionPanelScript.IsSelectedForExploration(boardScript.hoveredFogTile) != lastExpeditionToggle) {
+            UIExpeditionPanelScript.Toggle(boardScript.hoveredFogTile);
         }
     }
     void UpdateMouseUp() {
@@ -55,7 +64,9 @@ public class InteractionScript : MonoBehaviour {
             // Move the entity.
             if (party.tile != null) {
                 var path = game.board.AStar(party.tile.coor, targetTile.coor);
-                boardScript.hoveredTile.MoveEntityHereSlow(grabbedEntity, game.board.GetPathTimeCost(path));
+                if (path != null) {
+                    boardScript.hoveredTile.MoveEntityHereSlow(grabbedEntity, game.board.GetPathTimeCost(path));
+                }
             } else if (targetTile.GetNeighbors().Any(t => t.entity?.HasAbility(CreatureAbilityHome.NAME) == true)) {
                 List<Creature> shopCreatures = game.shop.creatures;
                 int shopIndex = shopCreatures.IndexOf(party.creatures[0]);

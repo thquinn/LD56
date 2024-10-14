@@ -1,3 +1,4 @@
+using Assets.Code.Model.Creatures;
 using UnityEngine;
 using UnityEngine.U2D;
 using UnityEngine.UI;
@@ -13,6 +14,7 @@ public class VFXAnimatedSpriteScript : MonoBehaviour {
     public string spriteName;
 
     int animationFrame = -1;
+    Creature lastCreature;
 
     void Start() {
         Debug.Assert((srMain != null && srBlur != null) || (imageMain != null && imageBlur != null));
@@ -21,9 +23,10 @@ public class VFXAnimatedSpriteScript : MonoBehaviour {
     void Update() {
         // Sprite animation.
         int nextAnimationFrame = Mathf.FloorToInt((Time.time * ANIMATION_RATE) % 5);
-        if (nextAnimationFrame != animationFrame) {
+        if (nextAnimationFrame != animationFrame || creatureScript.creature != lastCreature) {
             animationFrame = nextAnimationFrame;
-            string frameName = $"{creatureScript.creature.name.ToLower()}_{animationFrame}";
+            lastCreature = creatureScript.creature;
+            string frameName = $"{lastCreature.name.ToLower()}_{animationFrame}";
             Sprite spriteMain = atlasCreatures.GetSprite(frameName);
             Sprite[] sprites = new Sprite[atlasCreatures.spriteCount];
             atlasCreatures.GetSprites(sprites);

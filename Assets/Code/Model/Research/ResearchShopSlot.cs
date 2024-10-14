@@ -5,7 +5,7 @@
         public ResearchShopSlot(int cost) : base(
             GetID(cost),
             "Shop Expansion",
-            "Gain an additional slot in the shop.",
+            "An additional slot in the shop.",
             cost
         ) { }
 

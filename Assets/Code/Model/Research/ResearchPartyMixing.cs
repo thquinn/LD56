@@ -10,7 +10,7 @@
 
         public override void Unlock(Game game) {
             base.Unlock(game);
-            game.researchStatus.partySize++;
+            game.researchStatus.partyMixing = true;
         }
     }
 }

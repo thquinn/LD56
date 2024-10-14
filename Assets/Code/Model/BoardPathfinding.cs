@@ -4,6 +4,7 @@ using UnityEngine;
 namespace Assets.Code.Model {
     public partial class Board {
         public int GetPathTimeCost(List<Vector2Int> path) {
+            if (path == null || path.Count < 2) return 0;
             int n = path.Count - 1;
             // 1, 2, 2, 3, 3, 3...
             return Mathf.RoundToInt(Mathf.Sqrt(2 * n));

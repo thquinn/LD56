@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: bb40c4ec88359784fa631a158b41fb00
+guid: 4bfc1e139752d60449cddfdb6715d5a3
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: test_0
+      name: sighter_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 16
-        height: 16
+        height: 15
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -131,7 +131,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: test_1
+      name: sighter_1
       rect:
         serializedVersion: 2
         x: 16
@@ -152,7 +152,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: test_2
+      name: sighter_2
       rect:
         serializedVersion: 2
         x: 32
@@ -173,7 +173,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: test_3
+      name: sighter_3
       rect:
         serializedVersion: 2
         x: 48
@@ -194,7 +194,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: test_4
+      name: sighter_4
       rect:
         serializedVersion: 2
         x: 64

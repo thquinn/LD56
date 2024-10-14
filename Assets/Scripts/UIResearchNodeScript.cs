@@ -60,6 +60,7 @@ public class UIResearchNodeScript : TooltipBehavior {
     }
 
     public void Click() {
+        if (research.unlocked) return;
         if (!CanAfford()) return;
         game.researchPoints -= research.cost;
         research.Unlock(game);

@@ -1,4 +1,5 @@
 ﻿using Assets.Code.Model.Creatures;
+using Assets.Code.Model.GameEvents;
 
 namespace Assets.Code.Model {
     public abstract class Ability {
@@ -24,6 +25,9 @@ namespace Assets.Code.Model {
                 if (ability.name == name) return ability == this;
             }
             return false;
+        }
+        protected bool ShouldHandleEventAsSource(GameEvent e) {
+            return IsFirstInstance() && (e.source as Party)?.Contains(creature) == true;
         }
     }
 

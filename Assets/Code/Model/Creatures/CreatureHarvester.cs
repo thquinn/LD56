@@ -19,14 +19,12 @@ namespace Assets.Code.Model.Creatures {
             base.AttachTo(creature);
             GameManagerScript.events.Listen(
                 GameEventType.PartyKilledEnemy,
-                e =>
-                    IsFirstInstance() &&
-                    (e.source as Party)?.creatures.Contains(creature) == true,
-            Handle
+                ShouldHandleEventAsSource,
+            HandlePartyKilledEnemy
             );
         }
 
-        bool Handle(GameEvent e) {
+        bool HandlePartyKilledEnemy(GameEvent e) {
             GameManagerScript.instance.game.money += AMOUNT;
             return false;
         }

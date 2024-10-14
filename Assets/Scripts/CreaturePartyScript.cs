@@ -9,7 +9,7 @@ public class CreaturePartyScript : EntityScript<Party> {
     static float CREATURE_SPACING = .14f;
     static float CREATURE_SCALING = .3f;
     static float MOVE_ANIMATION_Y = .66f;
-    static float MOVE_ANIMATION_TIME = .075f;
+    static float MOVE_ANIMATION_TIME = .2f;
 
     public GameObject prefabCreature;
 

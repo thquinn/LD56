@@ -40,6 +40,7 @@ public class UIResearchScreenScript : MonoBehaviour {
         UpdateInput();
     }
     void UpdateInput() {
+        if (Input.GetKey(KeyCode.Escape)) Hide();
         if (!showing) return;
         Vector2 inputVector = new Vector2(
             Input.GetKey(KeyCode.A) ? -1 : Input.GetKey(KeyCode.D) ? 1 : 0,

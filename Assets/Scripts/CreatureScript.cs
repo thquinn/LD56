@@ -12,12 +12,16 @@ public class CreatureScript : MonoBehaviourWithCreature {
 
     float alphaInitialShadow;
 
+    bool started = false;
     void Start() {
+        if (started) return;
+        started = true;
         alphaInitialShadow = srShadow.color.a;
     }
 
     public void Init(Creature creature) {
         this.creature = creature;
+        Start();
         Update();
     }
 

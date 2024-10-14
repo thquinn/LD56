@@ -14,14 +14,16 @@ public class TileScript : MonoBehaviour {
     public GameObject prefabSpawner, prefabOre;
 
     public MeshRenderer meshRenderer;
-    public GameObject fog, fogIcon, selectionTile, selectionExplore;
+    public GameObject fog, fogIcon, selectionTile;
     public Collider colliderTile, colliderFog;
     public SpriteRenderer pathRenderer;
-    public Sprite spritePathStraight, spritePathEnd, spritePathTurn60, spritePathTurn120;
+    public Sprite spritePathStart, spritePathStraight, spritePathEnd, spritePathTurn60, spritePathTurn120;
     public SpriteRenderer fogIconRenderer;
-    public ParticleSystem fogParticles;
+    public ParticleSystem fogParticles, revealParticles;
     public Sprite spriteFogOre;
     public Sprite spriteFogOutlineOre;
+    public SpriteRenderer selectionExploreRenderer;
+    public Color selectionExploreSurroundedColor;
     public SpriteRenderer[] grassRenderers;
     public TextMeshPro tmpDebug;
 
@@ -29,6 +31,8 @@ public class TileScript : MonoBehaviour {
     Game game;
     GameObject featureObject;
     List<Vector2Int> path;
+    Color selectionExploreColor;
+    bool firstUpdateDone;
 
     bool started = false;
     void Start() {
@@ -37,11 +41,12 @@ public class TileScript : MonoBehaviour {
         MaterialPropertyBlock block = new MaterialPropertyBlock();
         float h = Random.Range(150f, 165f) / 360f;
         float s = Random.Range(.5f, .65f);
-        float v = Random.Range(.85f, 1f);
+        float v = Random.Range(.85f, .95f);
         Color color = Color.HSVToRGB(h, s, v);
         meshRenderer.GetPropertyBlock(block);
         block.SetColor("_Color", color);
         meshRenderer.SetPropertyBlock(block);
+        selectionExploreColor = selectionExploreRenderer.color;
         foreach (SpriteRenderer grassRenderer in grassRenderers) {
             if (Random.value < .5f) {
                 grassRenderer.color = color;
@@ -59,16 +64,23 @@ public class TileScript : MonoBehaviour {
     }
 
     void Update() {
+        if (firstUpdateDone && tile.revealed && fog.activeSelf) {
+            revealParticles.gameObject.SetActive(true);
+            revealParticles.Play();
+        }
         fog.SetActive(!tile.revealed);
         fogIcon.SetActive(!tile.revealed && tile.feature != null && tile.distanceToRevealed <= game.researchStatus.fogVisionRadius);
         bool tileSelect = !InteractionScript.IsSpawningNewParty() && BoardScript.instance.hoveredTile == tile;
         tileSelect |= InteractionScript.IsSpawningNewParty() && tile.GetNeighbors().Any(t => t.entity?.HasAbility(CreatureAbilityHome.NAME) == true);
         tileSelect &= path == null;
         selectionTile.SetActive(tileSelect);
-        bool fogSelect = UIExpeditionPanelScript.IsSelectedForExploration(tile);
+        bool fogSelect = UIExpeditionPanelScript.IsSelectedForExploration(tile) || UIExpeditionPanelScript.IsSurroundedForExploration(tile);
         fogSelect |= BoardScript.instance.hoveredFogTile == tile && UIExpeditionPanelScript.CanToggle(tile);
         fogSelect |= BoardScript.instance.hoveredFogTile == tile && tile.distanceToRevealed == 1 && InteractionScript.GetGrabbed()?.CanExplore(tile) == true;
-        selectionExplore.SetActive(fogSelect);
+        selectionExploreRenderer.gameObject.SetActive(fogSelect);
+        if (selectionExploreRenderer.gameObject.activeSelf) {
+            selectionExploreRenderer.color = UIExpeditionPanelScript.IsSurroundedForExploration(tile) ? selectionExploreSurroundedColor : selectionExploreColor;
+        }
         if (tile.revealed && tile.feature != null && featureObject == null) {
             var fogShape = fogParticles.shape;
             if (tile.feature is Spawner) {
@@ -85,18 +97,28 @@ public class TileScript : MonoBehaviour {
             UpdatePath();
         }
         tmpDebug.text = tile.distanceToRevealed.ToString();
+        firstUpdateDone = true;
     }
 
     void UpdatePath() {
         int pathIndex = InteractionScript.PathIndex(tile);
-        pathRenderer.gameObject.SetActive(pathIndex > 0);
+        pathRenderer.gameObject.SetActive(pathIndex >= 0);
         if (!pathRenderer.gameObject.activeSelf) {
             return;
         }
-        Vector3Int a = Util.BoardCoorToCube(path[pathIndex - 1]);
-        Vector3Int b = Util.BoardCoorToCube(path[pathIndex]);
+        int dIndexA = Mathf.Max(0, pathIndex - 1);
+        int dIndexB = Mathf.Max(1, pathIndex);
+        Vector3Int a = Util.BoardCoorToCube(path[dIndexA]);
+        Vector3Int b = Util.BoardCoorToCube(path[dIndexB]);
         Vector3Int dAB = b - a;
-        if (pathIndex == path.Count - 1) {
+        if (pathIndex == 0) {
+            pathRenderer.sprite = spritePathStart;
+            float degrees;
+            if (dAB.x == 0) degrees = dAB.y < 0 ? 0 : 180;
+            else if (dAB.y == 0) degrees = dAB.z > 0 ? 60 : 240;
+            else degrees = dAB.x < 0 ? 120 : 300;
+            pathRenderer.transform.localRotation = Quaternion.Euler(0, 0, degrees);
+        } else if (pathIndex == path.Count - 1) {
             pathRenderer.sprite = spritePathEnd;
             float degrees;
             if (dAB.x == 0) degrees = dAB.y < 0 ? 0 : 180;

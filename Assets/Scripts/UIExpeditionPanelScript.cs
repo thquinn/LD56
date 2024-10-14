@@ -34,36 +34,41 @@ public class UIExpeditionPanelScript : MonoBehaviour {
         return instance?.gameObject.activeSelf == true;
     }
     public static bool IsSelectedForExploration(Tile tile) {
-        return instance?.expedition.tiles.Contains(tile) == true;
+        return instance?.expedition.selectedTiles.Contains(tile) == true;
+    }
+    public static bool IsSurroundedForExploration(Tile tile) {
+        return instance?.expedition.surroundedTiles.Contains(tile) == true;
     }
     public static bool CanToggle(Tile tile) {
         return instance?.CanToggleImpl(tile) == true;
     }
     public bool CanToggleImpl(Tile tile) {
         if (!IsActive()) return false;
-        if (!expedition.tiles.Contains(tile)) {
-            if (expedition.tiles.Count == 0 && tile.distanceToRevealed == 1) return true;
-            return expedition.tiles.Any(t => Util.HexagonalDistance(t.coor, tile.coor) == 1);
+        if (!expedition.selectedTiles.Contains(tile)) {
+            if (expedition.selectedTiles.Count == 0 && tile.distanceToRevealed == 1) return true;
+            return expedition.selectedTiles.Any(t => Util.HexagonalDistance(t.coor, tile.coor) == 1);
         }
-        // Tiles can't be toggled off if they're the only distance 1 tile and there are 2+ tiles.
-        if (tile.distanceToRevealed == 1 && expedition.tiles.Count(t => t.distanceToRevealed == 1) == 1 && expedition.tiles.Count >= 2) return false;
+        // Tiles can't be toggled off if they're the only one next to the party.
+        var adjacents = expedition.selectedTiles.Where(t => Util.HexagonalDistance(t.coor, expedition.party.tile.coor) == 1);
+        if (adjacents.Count() == 1 && adjacents.First() == tile) return false;
         // Tiles can't be toggled off if they would cut the selection in half.
-        return Util.CoorsWouldBeContiguousWithout(expedition.tiles.Select(t => t.coor).ToHashSet(), tile.coor);
+        return Util.CoorsWouldBeContiguousWithout(expedition.selectedTiles.Select(t => t.coor).ToHashSet(), tile.coor);
     }
     public static void Toggle(Tile tile) {
         instance?.ToggleImpl(tile);
     }
     void ToggleImpl(Tile tile) {
         if (!CanToggleImpl(tile)) return;
-        if (expedition.tiles.Contains(tile)) {
-            expedition.tiles.Remove(tile);
+        if (expedition.selectedTiles.Contains(tile)) {
+            expedition.selectedTiles.Remove(tile);
         } else {
-            expedition.tiles.Add(tile);
+            expedition.selectedTiles.Add(tile);
         }
-        if (expedition.tiles.Count == 0) {
+        if (expedition.selectedTiles.Count == 0) {
             Cancel();
             return;
         }
+        expedition.FindSurrounded();
         tmpTime.text = $"<sprite name=\"time\" tint=1>{expedition.GetTimeCost()}";
         tmpResearch.text = $"<sprite name=\"research\" tint=1>{expedition.GetResearchGain()}";
         tmpLoss.text = $"{expedition.GetLossPercent()}%";

@@ -54,6 +54,11 @@ namespace Assets.Code.Model {
             return tilesByRecent.Count;
         }
 
+        public bool IsBorderCoor(Vector2Int coor) {
+            coor = OriginCoorToActual(coor);
+            return coor.x == 0 || coor.y == 0 || coor.x == tiles.GetLength(0) - 1 || coor.y == tiles.GetLength(1) - 1;
+        }
+
         public void RevealTiles(IEnumerable<Tile> tilesToReveal) {
             foreach (Tile tile in tilesToReveal) {
                 tile.revealed = true;
