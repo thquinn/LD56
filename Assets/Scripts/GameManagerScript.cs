@@ -3,6 +3,7 @@ using Assets.Code.Model;
 using Assets.Code.Model.GameEvents;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 public class GameManagerScript : MonoBehaviour {
@@ -11,11 +12,15 @@ public class GameManagerScript : MonoBehaviour {
         get { return instance.game.gameEventManager; }
     }
 
+    static float WAIT_TICK_SECONDS = .5f;
+    static float IDLE_TICK_SECONDS = 3;
+
     public GameObject prefabCreatureParty, prefabEnemy;
 
     public Game game;
     Dictionary<Entity, EntityScript> entityScripts;
     Pauser pauser;
+    float idleTimer;
 
     void Start() {
         instance = this;
@@ -37,12 +42,15 @@ public class GameManagerScript : MonoBehaviour {
                 entityScripts[entity] = Instantiate(prefabEnemy, transform).GetComponent<EnemyScript>().Init(entity as Enemy);
             }
         }
-        if (game.waitTicks > 0 && pauser.IsUnpaused()) {
-            game.Tick();
+        if (IsRunning()) {
+            idleTimer += Time.deltaTime;
+            if (idleTimer > (game.waitTicks > 0 ? WAIT_TICK_SECONDS : IDLE_TICK_SECONDS)) {
+                Tick();
+            }
         }
         // DEBUG
         if (Input.GetKeyDown(KeyCode.Space) && pauser.IsUnpaused()) {
-            game.Tick();
+            Tick();
         }
         if (Input.GetKeyDown(KeyCode.F1)) {
             game.time += 100;
@@ -57,10 +65,18 @@ public class GameManagerScript : MonoBehaviour {
         }
     }
 
+    void Tick() {
+        game.Tick();
+        idleTimer = 0;
+    }
+
     internal static PauseSource GetPauseSource() {
         return instance.pauser.GetSource();
     }
+    internal static bool IsRunning() {
+        return !instance.game.gameOver && instance.pauser.IsUnpaused();
+    }
     internal static bool IsInteractable() {
-        return !instance.game.gameOver && instance.game.waitTicks == 0 && instance.pauser.IsUnpaused();
+        return IsRunning() && instance.game.waitTicks == 0;
     }
 }

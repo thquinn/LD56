@@ -18,6 +18,13 @@ namespace Assets.Code.Model {
         public virtual void AttachTo(Creature creature) {
             this.creature = creature;
         }
+        protected bool IsFirstInstance() {
+            if (creature?.party == null) return false;
+            foreach (Ability ability in creature.party.GetAbilities()) {
+                if (ability.name == name) return ability == this;
+            }
+            return false;
+        }
     }
 
     public abstract class EnemyAbility : Ability {

@@ -18,6 +18,7 @@ public class CreatureScript : MonoBehaviourWithCreature {
 
     public void Init(Creature creature) {
         this.creature = creature;
+        Update();
     }
 
     void Update() {

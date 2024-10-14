@@ -25,6 +25,7 @@ public class CreaturePartyScript : EntityScript<Party> {
     float initialAttackTextSize;
 
     void Start() {
+        if (creatureScripts != null) return;
         creatureScripts = new Dictionary<Creature, CreatureScript>();
         pauseSource = GameManagerScript.GetPauseSource();
         randomAngle = Random.Range(0, 2 * Mathf.PI);
@@ -33,6 +34,8 @@ public class CreaturePartyScript : EntityScript<Party> {
 
     public override EntityScript<Party> Init(Party party) {
         this.party = party;
+        Start();
+        Update();
         return this;
     }
 
@@ -70,9 +73,8 @@ public class CreaturePartyScript : EntityScript<Party> {
             }
         }
         // Move animation.
-        bool moving = party.tileMovingTo != null && transform.localPosition.y < MOVE_ANIMATION_Y * .99f;
-        transform.SetLocalY(Mathf.SmoothDamp(transform.localPosition.y, moving ? MOVE_ANIMATION_Y : 0, ref dy, MOVE_ANIMATION_TIME));
-        pauseSource.Set(moving);
+        transform.SetLocalY(Mathf.SmoothDamp(transform.localPosition.y, party.tileMovingTo == null ? 0 : MOVE_ANIMATION_Y, ref dy, MOVE_ANIMATION_TIME));
+        pauseSource.Set(party.tileMovingTo != null && transform.localPosition.y < MOVE_ANIMATION_Y * .5f);
         // Attack ring.
         ring.SetActive(transform.localPosition.y < .01f);
         int attack = party.GetAttack();

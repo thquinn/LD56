@@ -16,6 +16,7 @@ public class EnemyScript : EntityScript<Enemy> {
     public override EntityScript<Enemy> Init(Enemy enemy) {
         this.enemy = enemy;
         tmpInitialSize = tmp.fontSize;
+        Update();
         return this;
     }
 

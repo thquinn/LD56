@@ -7,6 +7,7 @@ public class TiltTowardCameraScript : MonoBehaviour {
 
     void Start() {
         cam = Camera.main;
+        Update();
     }
 
     void Update() {

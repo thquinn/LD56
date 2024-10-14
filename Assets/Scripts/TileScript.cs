@@ -30,7 +30,10 @@ public class TileScript : MonoBehaviour {
     GameObject featureObject;
     List<Vector2Int> path;
 
+    bool started = false;
     void Start() {
+        if (started) return;
+        started = true;
         MaterialPropertyBlock block = new MaterialPropertyBlock();
         float h = Random.Range(150f, 165f) / 360f;
         float s = Random.Range(.5f, .65f);
@@ -51,6 +54,8 @@ public class TileScript : MonoBehaviour {
         this.tile = tile;
         game = tile.board.game;
         transform.localPosition = Util.BoardCoorToWorldCoor(tile.coor);
+        Start();
+        Update();
     }
 
     void Update() {

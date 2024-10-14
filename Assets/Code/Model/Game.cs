@@ -1,6 +1,7 @@
 ﻿using Assets.Code.Model.GameEvents;
 using Assets.Code.Model.Research;
 using System.Linq;
+using UnityEngine;
 
 namespace Assets.Code.Model {
     public partial class Game {
@@ -33,7 +34,7 @@ namespace Assets.Code.Model {
             foreach (Entity entity in board.GetTiles().Select(t => t.entity).Where(e => e != null).ToArray().Shuffle()) {
                 entity.Tick();
             }
-            time--;
+            LoseTime(1);
             totalTicks++;
             if (waitTicks > 0) waitTicks--;
             foreach (Tile tile in board.GetTiles()) {
@@ -50,6 +51,10 @@ namespace Assets.Code.Model {
             if (time == 0) {
                 debt.Pay();
             }
+        }
+
+        public void LoseTime(int amount) {
+            time = Mathf.Max(0, time - amount);
         }
 
         public void StartExpedition(Expedition expedition) {

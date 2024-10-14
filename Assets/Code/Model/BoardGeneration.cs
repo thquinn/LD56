@@ -62,7 +62,7 @@ namespace Assets.Code.Model {
                 TileFeature feature;
                 float selector = Random.Range(0, 1.2f);
                 if (selector < 1) {
-                    feature = new Spawner(100, 10);
+                    feature = new Spawner(100, 1, 10);
                 } else {
                     feature = new Ore(3, 5);
                 }

@@ -24,7 +24,7 @@ namespace Assets.Code.Model {
             }
             RevealTiles(Util.GetHexCoorsWithinRange(Vector2Int.zero, STARTING_VISION_RADIUS).Select(c => GetTile(c)).Where(t => t != null));
             SpawnEntityAtCoor(new Party(Creature.QUEEN.Clone()), -Vector2Int.one);
-            PlaceFeatureAtCoor(new Spawner(100, 10), new Vector2Int(1, 0));
+            PlaceFeatureAtCoor(new Spawner(100, 1, 10), new Vector2Int(1, 0));
             PopulateNewTiles(tilesByRecent);
         }
 

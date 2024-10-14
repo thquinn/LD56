@@ -13,7 +13,6 @@ namespace Assets.Code.Model {
             this.game = game;
             weights = new List<(Creature, float)>() {
                 (Creature.HARVESTER, 100f),
-                (Creature.ANGEL, 1000f),
             };
             creatures = new List<Creature>();
             AddSlot();

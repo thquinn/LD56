@@ -18,8 +18,10 @@ namespace Assets.Code.Model.Creatures {
         public override void AttachTo(Creature creature) {
             base.AttachTo(creature);
             GameManagerScript.events.Listen(
-                GameEventType.EnemyKilled,
-                e => (e.source as Party)?.creatures.Contains(creature) == true,
+                GameEventType.PartyKilledEnemy,
+                e =>
+                    IsFirstInstance() &&
+                    (e.source as Party)?.creatures.Contains(creature) == true,
             Handle
             );
         }

@@ -84,6 +84,6 @@ namespace Assets.Code.Model.GameEvents {
         }
     }
     public enum GameEventType {
-        None, AttackFilterTargets, AttackBeforeDamage, EnemyKilled
+        None, AttackFilterTargets, AttackBeforeArmor, AttackAfterArmor, PartyKilledEnemy
     }
 }

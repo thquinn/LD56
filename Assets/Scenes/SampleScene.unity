@@ -1997,6 +1997,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1744698442}
   - {fileID: 1775275230}
   - {fileID: 1735520265}
   m_Father: {fileID: 950890454}
@@ -2296,10 +2297,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 402409a749de46e4aa99ab974392fdc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  prefabTimeSpinner: {fileID: 8066651552160205545, guid: ecb229119ecf1db4e8651cd135562227,
+    type: 3}
   tmpTime: {fileID: 1735520266}
   tmpMoney: {fileID: 693432182}
   tmpResearch: {fileID: 992311251}
   tmpDebt: {fileID: 1729228507}
+  timeParticlesCanvasGroup: {fileID: 1744698443}
 --- !u!1 &962563696
 GameObject:
   m_ObjectHideFlags: 0
@@ -3894,6 +3898,54 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1735520264}
   m_CullTransparentMesh: 1
+--- !u!1 &1744698441
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1744698442}
+  - component: {fileID: 1744698443}
+  m_Layer: 5
+  m_Name: Particles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1744698442
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1744698441}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 750363546}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &1744698443
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1744698441}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!224 &1759797232 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2570101019397352954, guid: 9a06c9e4c4b20cb459bcd45b64de73f0,

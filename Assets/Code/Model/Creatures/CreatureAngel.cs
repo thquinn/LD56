@@ -20,13 +20,16 @@ namespace Assets.Code.Model.Creatures {
             GameManagerScript.events.Listen(
                 GameEventType.AttackFilterTargets,
                 e =>
+                    IsFirstInstance() &&
                     (e.source as Party)?.creatures.Contains(creature) == true &&
                     e.enemies.Any(enemy => enemy.health == 1),
                 HandleAttackFilterTargets
             );
             GameManagerScript.events.Listen(
-                GameEventType.AttackBeforeDamage,
-                e => (e.source as Party)?.creatures.Contains(creature) == true,
+                GameEventType.AttackAfterArmor,
+                e =>
+                    IsFirstInstance() &&
+                    (e.source as Party)?.creatures.Contains(creature) == true,
                 HandleAttackBeforeDamage
             );
         }

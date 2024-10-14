@@ -3,11 +3,12 @@ using UnityEngine;
 
 namespace Assets.Code.Model {
     public class Spawner : TileFeature {
-        int health, cooldown, timer;
+        int health, armor, cooldown, timer;
         EnemyAbility[] abilities;
 
-        public Spawner(int health, int cooldown, params EnemyAbility[] abilities) {
+        public Spawner(int health, int armor, int cooldown, params EnemyAbility[] abilities) {
             this.health = health;
+            this.armor = armor;
             this.cooldown = cooldown;
             this.abilities = abilities;
         }
@@ -30,12 +31,14 @@ namespace Assets.Code.Model {
                 return;
             }
             Tile randomNeighbor = Util.GetNeighboringHexCoors(tile.coor).Select(c => tile.board.GetTile(c)).Where(t => t?.CanBeMovedTo() == true).ToArray().Pick();
-            if (randomNeighbor != null) {
+            if (randomNeighbor == null) {
+                tile.board.game.LoseTime(3);
+            } else {
                 SpawnEnemy(randomNeighbor.coor);
             }
         }
         void SpawnEnemy(Vector2Int coor) {
-            tile.board.SpawnEntityAtCoor(new Enemy(health), coor);
+            tile.board.SpawnEntityAtCoor(new Enemy(health, armor, abilities), coor);
         }
     }
 }

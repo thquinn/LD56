@@ -68,16 +68,10 @@ namespace Assets.Code.Model {
             Enemy[] targets = enemies.Where(e => e.health == minHealth).ToArray();
             Enemy target = targets.Pick();
             if (target == null) return false;
-            GameEvent damageEvent = new GameEvent() {
-                type = GameEventType.AttackBeforeDamage,
-                source = this,
-                target = target,
-                amount = GetAttack(),
-            }.Trigger();
-            target.Damage(damageEvent.amount);
+            target.Attacked(this, GetAttack());
             if (target.isDead) {
                 GameManagerScript.events.Trigger(new GameEvent() {
-                    type = GameEventType.EnemyKilled,
+                    type = GameEventType.PartyKilledEnemy,
                     source = this,
                     target = target,
                 });

@@ -16,6 +16,7 @@ public class UIUnitScript : MonoBehaviourWithCreature {
     public void Init(int shopIndex) {
         game = GameManagerScript.instance.game;
         this.shopIndex = shopIndex;
+        Update();
     }
 
     void Update() {
