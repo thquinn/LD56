@@ -1227,7 +1227,7 @@ GameObject:
   - component: {fileID: 6969301252705048720}
   - component: {fileID: 4248814556846712299}
   - component: {fileID: 6217159082769310910}
-  - component: {fileID: 1817823153361076442}
+  - component: {fileID: 4900552924576508700}
   m_Layer: 8
   m_Name: Shop Unit
   m_TagString: Untagged
@@ -1344,7 +1344,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!114 &1817823153361076442
+--- !u!114 &4900552924576508700
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

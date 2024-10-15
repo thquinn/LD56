@@ -4,18 +4,20 @@ using TMPro;
 using UnityEngine;
 
 public class EnemyScript : EntityScript<Enemy> {
-    public TextMeshPro tmp;
+    public GameObject goStatus, goArmor;
+    public TextMeshPro tmpHealth, tmpArmor;
     public ParticleSystem particles;
     public SpriteRenderer srShadow;
 
     Enemy enemy;
-    float tmpInitialSize;
+    float tmpHealthInitialSize, tmpArmorInitialSize;
     bool destroying;
     float vParticlesSpeed, vShadowAlpha;
 
     public override EntityScript<Enemy> Init(Enemy enemy) {
         this.enemy = enemy;
-        tmpInitialSize = tmp.fontSize;
+        tmpHealthInitialSize = tmpHealth.fontSize;
+        tmpArmorInitialSize = tmpArmor.fontSize;
         Update();
         return this;
     }
@@ -23,20 +25,24 @@ public class EnemyScript : EntityScript<Enemy> {
     void Update() {
         if (destroying) {
             var particlesMain = particles.main;
-            particlesMain.simulationSpeed = Mathf.SmoothDamp(particlesMain.simulationSpeed, 5, ref vParticlesSpeed, 2);
+            particlesMain.simulationSpeed = Mathf.SmoothDamp(particlesMain.simulationSpeed, 5, ref vParticlesSpeed, 1);
             srShadow.SetAlpha(Mathf.SmoothDamp(srShadow.color.a, 0, ref vShadowAlpha, 2));
             return;
         }
         if (enemy.isDead) {
             particles.Stop();
-            tmp.gameObject.SetActive(false);
+            goStatus.SetActive(false);
             Invoke("DelayedDestroy", 5);
             destroying = true;
             return;
         }
         transform.localPosition = Util.BoardCoorToWorldCoor(enemy.tile.coor);
-        tmp.text = Util.IntToDisplayString(enemy.health);
-        tmp.fontSize = tmpInitialSize * Util.IntToDisplayStringScale(enemy.health);
+        tmpHealth.text = Util.IntToDisplayString(enemy.health);
+        tmpHealth.fontSize = tmpHealthInitialSize * Util.IntToDisplayStringScale(enemy.health);
+        int armor = enemy.GetArmor();
+        goArmor.SetActive(armor > 0);
+        tmpArmor.text = armor.ToString();
+        tmpArmor.fontSize = tmpArmorInitialSize * Util.IntToDisplayStringScale(armor);
     }
 
     void DelayedDestroy() {

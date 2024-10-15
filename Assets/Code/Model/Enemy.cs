@@ -8,7 +8,8 @@ namespace Assets.Code.Model {
     public class Enemy : Entity {
         static int LINGER_START_TICKS = 100, LINGER_CONTINUE_TICKS = 20;
 
-        public int health, maxHealth, armor;
+        public int health, maxHealth;
+        int armor;
         public EnemyAbility[] abilities;
         public int lingerTimer;
 
@@ -28,6 +29,9 @@ namespace Assets.Code.Model {
                 title = GetName(),
                 body = "This is an enemy.",
             };
+        }
+        public int GetArmor() {
+            return armor;
         }
         public override bool HasAbility(string name) {
             return abilities.Any(a => a.name == name);

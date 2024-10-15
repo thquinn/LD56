@@ -10462,7 +10462,7 @@ MonoBehaviour:
   fogIconRenderer: {fileID: 3991207515369302878}
   fogParticles: {fileID: 9101198855136047836}
   revealParticles: {fileID: 3726708836567754900}
-  spriteFogOre: {fileID: 21300000, guid: 713a46f9333f5e3419f9d1b403e57b31, type: 3}
+  spriteFogOre: {fileID: 21300000, guid: be3c0627608070a488f9f01105c3dcff, type: 3}
   spriteFogOutlineOre: {fileID: 21300000, guid: 9d2f6e1b4e5b9ac4a81c4940208cf1dc,
     type: 3}
   selectionExploreRenderer: {fileID: 7655629026072225218}

@@ -10,7 +10,7 @@ public class BoardScript : MonoBehaviour {
 
     public LayerMask layerMaskTile, layerMaskFog;
 
-    Board board;
+    public Board board;
     Dictionary<Collider, TileScript> colliderToTile;
     public Tile hoveredTile, hoveredFogTile;
     int tileScriptCount;

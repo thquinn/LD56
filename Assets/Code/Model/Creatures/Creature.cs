@@ -22,7 +22,8 @@ namespace Assets.Code.Model.Creatures {
         }
 
         public int GetAttack() {
-            return attack;
+            int multiplier = party.HasAbility(CreatureAbilityBoost.NAME) ? 2 : 1;
+            return attack * multiplier;
         }
     }
 }

@@ -14,9 +14,9 @@ namespace Assets.Code.Model {
 
         public Board(Game game) {
             this.game = game;
-            tiles = new Tile[21, 21];
+            tiles = new Tile[31, 31];
             tilesByRecent = new List<Tile>();
-            centerCoor = new Vector2Int(10, 10);
+            centerCoor = new Vector2Int(15, 15);
             for (int x = 0; x < tiles.GetLength(0); x++) {
                 for (int y = 0; y < tiles.GetLength(1); y++) {
                     CreateTile(x, y);
@@ -33,6 +33,13 @@ namespace Assets.Code.Model {
         }
         Vector2Int ActualCoorToOrigin(Vector2Int actualCoor) {
             return actualCoor - centerCoor;
+        }
+        public Rect GetWorldBounds() {
+            Vector3 low = Util.BoardCoorToWorldCoor(ActualCoorToOrigin(Vector2Int.zero));
+            Vector3 high = Util.BoardCoorToWorldCoor(ActualCoorToOrigin(new Vector2Int(tiles.GetLength(0), tiles.GetLength(1))));
+            Vector2 lowXZ = new Vector2(low.x, high.z);
+            Vector2 highXZ = new Vector2(high.x, low.z);
+            return new Rect(lowXZ, highXZ - lowXZ);
         }
 
         public Tile GetTile(Vector2Int coor) {

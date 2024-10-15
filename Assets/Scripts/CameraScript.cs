@@ -1,3 +1,4 @@
+using Assets.Code;
 using UnityEngine;
 
 public class CameraScript : MonoBehaviour {
@@ -37,6 +38,10 @@ public class CameraScript : MonoBehaviour {
         float x = Mathf.Cos(horizontalAngle) * xzDistance;
         float y = Mathf.Sin(verticalAngle) * distance;
         float z = Mathf.Sin(horizontalAngle) * xzDistance;
+        // Pan bounds.
+        Rect bounds = BoardScript.instance.board.GetWorldBounds().SubtractPadding(8f);
+        lookAt.x = Mathf.Clamp(lookAt.x, bounds.xMin, bounds.xMax);
+        lookAt.z = Mathf.Clamp(lookAt.z, bounds.yMin, bounds.yMax);
         transform.localPosition = lookAt + new Vector3(x, y, z);
         transform.LookAt(lookAt);
     }

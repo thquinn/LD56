@@ -7,7 +7,7 @@
         public static ResearchStatus STARTING_STATUS = new ResearchStatus() {
             partySize = 1,
             partyMixing = false,
-            fogVisionRadius = 1,
+            fogVisionRadius = 2,
         };
     }
 }

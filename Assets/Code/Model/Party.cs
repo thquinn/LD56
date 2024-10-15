@@ -33,6 +33,9 @@ namespace Assets.Code.Model {
         public override bool HasAbility(string name) {
             return creatures.Any(c => c.abilities.Any(a => a.name == name));
         }
+        public bool HasAbility(string name, Creature except) {
+            return creatures.Where(c => c != except).Any(c => c.abilities.Any(a => a.name == name));
+        }
         public IEnumerable<Ability> GetAbilities() {
             HashSet<string> abilityNames = new HashSet<string>();
             foreach (Creature creature in creatures) {

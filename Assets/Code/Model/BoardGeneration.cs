@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets.Code.Model {
     public partial class Board {
-        static int EXPANSION_CHECK_DISTANCE = 5;
+        static int EXPANSION_CHECK_DISTANCE = 8;
         static int EXPANSION_AMOUNT = 10;
 
         public void ExpansionCheck() {

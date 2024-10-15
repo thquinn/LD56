@@ -85,6 +85,10 @@ namespace Assets.Code {
             return new Vector2Int(x, y);
         }
 
+        public static Rect SubtractPadding(this Rect rect, float padding) {
+            return new Rect(rect.x + padding, rect.y + padding, rect.width - 2 * padding, rect.height - 2 * padding);
+        }
+
         static Camera mainCamera;
         public static Collider GetMouseCollider(LayerMask layerMask) {
             if (mainCamera == null) mainCamera = Camera.main;

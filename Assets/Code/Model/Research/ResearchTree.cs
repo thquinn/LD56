@@ -20,8 +20,10 @@ namespace Assets.Code.Model.Research {
 
             Add(new Vector2Int(4, -2), new ResearchPartyEnable(), ResearchStart.ID);
             Add(new Vector2Int(7, 3), new ResearchShopSlot(15), ResearchPartyEnable.ID);
-            Add(new Vector2Int(6, -6), new ResearchNewCreature(8, Creature.SIGHTER, 50f), ResearchPartyEnable.ID);
-            Add(new Vector2Int(6, -10), new ResearchPartyMixing(), ResearchNewCreature.GetID(Creature.SIGHTER));
+            Add(new Vector2Int(6, -5), new ResearchNewCreature(8, Creature.SIGHTER, 50f), ResearchPartyEnable.ID);
+            Add(new Vector2Int(6, -8), new ResearchPartyMixing(), ResearchNewCreature.GetID(Creature.SIGHTER));
+            Add(new Vector2Int(3, -11), new ResearchNewCreature(10, Creature.BOOSTER, 30f), ResearchPartyMixing.ID);
+            Add(new Vector2Int(0, -13), new ResearchPartyEnable3(), ResearchNewCreature.GetID(Creature.BOOSTER));
         }
 
         public IEnumerable<Research> AllResearch() {
